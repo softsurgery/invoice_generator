@@ -2,6 +2,7 @@ import { makeAutoObservable, action, computed } from "mobx";
 import { makePersistable } from 'mobx-persist-store';
 
 class InvoiceStore {
+    auto = -1
     id = 0
     company = ""
     date = "12/05/2001"
@@ -10,7 +11,8 @@ class InvoiceStore {
     po_number = 0
     bills = ""
     ships = ""
-    items =[this.createItem()]
+    items = [this.createItem()]
+    tax = 0
 
     constructor() {
         makeAutoObservable(this, {
@@ -97,12 +99,17 @@ class InvoiceStore {
         return this.items;
     }
 
-    createItem(index=0) {
+    getTax() {
+        return this.tax;
+    }
+
+    createItem() {
+        this.auto++;
         return {
-            id : index,
-            description:"",
-            quantity:5,
-            rate:0,
+            id: this.auto,
+            description: "",
+            quantity: 0,
+            rate: 0,
         }
     }
 
@@ -110,9 +117,27 @@ class InvoiceStore {
         this.items.push(this.createItem(this.items.length));
     }
 
-    updateItem(index=0,key,value){
-        this.items[index][key] = value;
+    updateItem(id, key, value) {
+        const indexToUpdate = this.items.findIndex(item => item.id === id);
+        this.items[indexToUpdate][key] = value;
     }
+
+    deleteItem(id) {
+        const indexToDelete = this.items.findIndex(item => item.id === id);
+        if (indexToDelete !== -1) {
+            this.items.splice(indexToDelete, 1);
+        }
+    }
+
+    sum(){
+        let sum = 0;
+        this.items.forEach(item => {
+            sum += item.quantity * item.rate;
+        });
+        return sum;
+    }
+
+
 }
 
 const invoiceStore = new InvoiceStore();

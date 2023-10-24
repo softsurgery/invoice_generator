@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import invoiceStore from '../data/InvoiceStore';
 
 const Invoice = observer(() => {
-
+    let index = 0
     return (
         <div style={{ width: "100%" }}>
             <div className="invoice">
@@ -19,6 +19,7 @@ const Invoice = observer(() => {
                     <Col sx={7}>
                         <Figure>
                             <Figure.Image
+                                className='logo'
                                 width={171}
                                 height={180}
                                 alt="171x180"
@@ -109,8 +110,8 @@ const Invoice = observer(() => {
                                 className="w-50"
                                 name="po_number"
                                 type="text"
-                                placeholder="Who is this invoice from?"
-                                alue={invoiceStore.getPONumber()}
+                                placeholder="PO Number"
+                                value={invoiceStore.getPONumber()}
                                 onChange={(e) => { invoiceStore.setPONumber(e.target.value) }} />
                         </Stack>
 
@@ -123,53 +124,74 @@ const Invoice = observer(() => {
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th ></th>
+
                             <th>Item</th>
                             <th>Quantity</th>
                             <th>Rate</th>
                             <th>Amount</th>
+                            <th ></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {invoiceStore.getItems().map(
-                            item => {
+                        {
+                            invoiceStore.getItems().map((item) => {
+                                const isFirstItem = item.id === invoiceStore.getItems()[0].id;
+                                index++;
                                 return (
-                                    
-                                    <tr id={`item${item.id}`}>
-                                      <Button
-                    variant="success"
-                    onClick={() => invoiceStore.addItem()}
-                >Add Item</Button>{' '}  
-                                        <td style={{ width: "700px" }}>
+                                    <tr key={`item${item.id}`}>
+                                        <td style={{ width: "65%" }}>
                                             <Form.Control
                                                 type="text"
-                                                placeholder="Description of Service or Product"
+                                                placeholder={"Description of Service or Product " + index}
                                                 value={item.description}
-                                                onChange={(e) => { invoiceStore.updateItem(item.id, "description", e.target.value) }} />
+                                                onChange={(e) => {
+                                                    invoiceStore.updateItem(item.id, "description", e.target.value);
+                                                }}
+                                            />
                                         </td>
-
-                                        <td >
+                                        <td style={{ width: "10%" }}>
                                             <Form.Control
                                                 type="number"
-                                                placeholder='1'
+                                                placeholder="1"
                                                 value={item.quantity}
-                                                onChange={(e) => { invoiceStore.updateItem(item.id, "quantity", e.target.value) }} />
+                                                onChange={(e) => {
+                                                    invoiceStore.updateItem(item.id, "quantity", e.target.value);
+                                                }}
+                                            />
                                         </td>
-
-                                        <td>
+                                        <td style={{ width: "10%" }}>
                                             <Form.Control
                                                 type="number"
-                                                placeholder='$'
+                                                placeholder="$"
                                                 value={item.rate}
-                                                onChange={(e) => { invoiceStore.updateItem(item.id, "rate", e.target.value) }} />
+                                                onChange={(e) => {
+                                                    invoiceStore.updateItem(item.id, "rate", e.target.value);
+                                                }}
+                                            />
                                         </td>
-
-                                        <td style={{ width: "100px" }}>
-                                            <h6 className='mt-2 mr-3'>{(item.rate * item.quantity).toFixed(2)} $</h6>
+                                        <td style={{ width: "10%" }}>
+                                            <h6 className="mt-2 mr-3">
+                                                {(item.rate * item.quantity).toFixed(2)} $
+                                            </h6>
                                         </td>
-                                    </tr>)
-                            }
-                        )}
+                                        {isFirstItem ? (
+                                            <td>
+                                                <div style={{ width: "100px" }}> </div>
+                                            </td>
+                                        ) : (
+                                            <td style={{ width: "5%" }}>
+                                                <Button
+                                                    variant="danger"
+                                                    onClick={() => invoiceStore.deleteItem(item.id)}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </td>
+                                        )}
+                                    </tr>
+                                );
+                            })
+                        }
                     </tbody>
                 </table>
                 <Button
@@ -177,24 +199,39 @@ const Invoice = observer(() => {
                     onClick={() => invoiceStore.addItem()}
                 >Add Item</Button>{' '}
                 <Row>
-                    <div className="col-8">
-                    </div>
-                    <div className="col-4">
-                        <table className="table table-sm text-right">
-                            <tr>
-                                <td><strong>Total HT</strong></td>
-                                <td className="text-right" th: text="${totalHT}">0,00€</td>
-                            </tr>
-                            <tr>
-                                <td>TVA 20%</td>
-                                <td className="text-right" th: text="${totalTVA}">0,00€</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total TTC</strong></td>
-                                <td className="text-right" th: text="${totalTTC}">0,00€</td>
-                            </tr>
-                        </table>
-                    </div>
+                    <Col xs={6}>
+                    </Col>
+                    <Col>
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'></strong>
+                            <h5 className='right-type mt-2 mr-3'>
+                                Total HT : 
+                            </h5>
+                            <Form.Control
+                                className="w-25"
+                                type="number"
+                                disabled
+                                placeholder="%"
+                                value={invoiceStore.sum()}
+                                onChange={(e) => { invoiceStore.setPONumber(e.target.value) }} /><span>$</span>
+                        </Stack>
+
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'></strong>
+                            <h5 className='right-type mt-2 mr-3'>TVA:</h5>
+                            <Form.Control
+                                className="w-25"
+                                type="number"
+                                placeholder="%"
+                                value={invoiceStore.getTax()}
+                                onChange={(e) => { invoiceStore.setPONumber(e.target.value) }} />
+                        </Stack>
+
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'></strong>
+                            <h5 className='right-type mt-2 mr-3'>Total TTC :<span style={{ marginLeft: "42px" }}>{invoiceStore.sum()} $</span></h5>
+                        </Stack>
+                    </Col>
                 </Row>
 
                 <p className="conditions">
