@@ -11,16 +11,17 @@ h6 {
 }
 
 .invoice {
-  background: #fff;
+  background: rgb(245, 245, 245);
   width: 99%;
   padding: 50px;
+  border-radius: 0.5em;
 }
 
 .logo {
   width: 200px;
 }
 
-.document-type {
+.right-type {
   text-align: right;
   color: #444;
 }

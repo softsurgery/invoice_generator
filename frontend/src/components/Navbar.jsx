@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Badge from 'react-bootstrap/esm/Badge';
 import { useNavigate } from "react-router-dom";
 function NavbarComponent() {
     const navigate = useNavigate()
@@ -21,7 +22,7 @@ function NavbarComponent() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link onClick={() => navigate("/")}>New Invoice</Nav.Link>
+                        <Nav.Link onClick={() => navigate("/")}>New Invoice <Badge bg="success">Here</Badge></Nav.Link>
                         <Nav.Link onClick={() => navigate("/history")}>History</Nav.Link>
                         <Nav.Link onClick={() => navigate("/guide")}>Guide</Nav.Link>
                     </Nav>

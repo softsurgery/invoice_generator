@@ -2,7 +2,7 @@ import Accordion from 'react-bootstrap/Accordion';
 
 function Accord() {
   return (
-    <Accordion defaultActiveKey="0">
+    <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header>Accordion Item #1</Accordion.Header>
         <Accordion.Body>
