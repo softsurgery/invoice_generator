@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Badge from 'react-bootstrap/esm/Badge';
 import { useNavigate } from "react-router-dom";
+
 function NavbarComponent() {
     const navigate = useNavigate()
     return (

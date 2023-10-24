@@ -7,9 +7,10 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
 import { observer } from "mobx-react";
-import invoiceStore from '../data/InvoiceStore.';
+import invoiceStore from '../data/InvoiceStore';
 
 const Invoice = observer(() => {
+
     return (
         <div style={{ width: "100%" }}>
             <div className="invoice">
@@ -26,11 +27,34 @@ const Invoice = observer(() => {
                                 Add Your Logo
                             </Figure.Caption>
                         </Figure>
-                        <br /><br />
+                        <br />
                         <strong>Who is this invoice from? (required)</strong>
                         <br />
-                        <Form.Control name="company" type="text" placeholder="Who is this invoice from?" className="w-75 mt-2" />
-
+                        <Form.Control name="company" type="text" placeholder="Who is this invoice from?" className="mt-2" />
+                        <Row className="mt-2" >
+                            <Col xs={6}>
+                                <strong>Bill To</strong>
+                                <br />
+                                <Form.Control
+                                    name="bills"
+                                    type="text"
+                                    placeholder="Bill To"
+                                    className="mt-2"
+                                    value={invoiceStore.getBills()}
+                                    onChange={(e) => { invoiceStore.setBills(e.target.value) }} />
+                            </Col>
+                            <Col xs={6}>
+                                <strong>Ship To</strong>
+                                <br />
+                                <Form.Control
+                                    name="ships"
+                                    type="text"
+                                    placeholder="Ship To"
+                                    className="mt-2"
+                                    value={invoiceStore.getShips()}
+                                    onChange={(e) => { invoiceStore.setShips(e.target.value) }} />
+                            </Col>
+                        </Row>
                     </Col>
                     <Col sx={5}>
                         <h1 className="justify-content-end">INVOICE</h1>
@@ -39,107 +63,104 @@ const Invoice = observer(() => {
                             <InputGroup.Text>#</InputGroup.Text>
                             <Form.Control
                                 placeholder="Invoice ID"
-                            />
+                                name="id"
+                                type="number"
+                                value={invoiceStore.getId()}
+                                onChange={(e) => { invoiceStore.setId(e.target.value) }} />
                         </InputGroup>
 
                         <Stack className="justify-content-end" direction="horizontal" gap={3}>
-                            <h6 className='right-type mt-2 mr-3'>Date :</h6>
+                            <strong className='right-type mt-2 mr-3'>Date :</strong>
                             <Form.Control
                                 className="w-50"
                                 name="date"
                                 type="date"
                                 placeholder="Date"
-                                value={invoiceStore.date} />
+                                value={invoiceStore.getDate()}
+                                onChange={(e) => { invoiceStore.setDate(e.target.value) }} />
                         </Stack>
 
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
-                            <h6 className='right-type mt-2 mr-3'>Payment Terms :</h6>
-                            <Form.Control 
-                                className="w-50" 
-                                name="payement_terms" 
-                                type="text" 
+                            <strong className='right-type mt-2 mr-3'>Payment Terms :</strong>
+                            <Form.Control
+                                className="w-50"
+                                name="payement_terms"
+                                type="text"
+                                placeholder="Payment Terms"
+                                value={invoiceStore.getPaymentTerms()}
+                                onChange={(e) => { invoiceStore.setPaymentTerms(e.target.value) }} />
+                        </Stack>
+
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'>Due Date :</strong>
+                            <Form.Control
+                                className="w-50"
+                                name="due_date"
+                                type="date"
                                 placeholder="Who is this invoice from?"
-                                value={invoiceStore.payement_terms} />
-                                
-                               
+                                value={invoiceStore.getDueDate()}
+                                onChange={(e) => { invoiceStore.setDueDate(e.target.value) }} />
                         </Stack>
 
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
-                            <h6 className='right-type mt-2 mr-3'>Due Date :</h6>
-                            <Form.Control className="w-50" name="due_date" type="date" placeholder="Who is this invoice from?" />
-                        </Stack>
-
-                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
-                            <h6 className='right-type mt-2 mr-3'>PO Number :</h6>
-                            <Form.Control className="w-50" name="po_number" type="text" placeholder="Who is this invoice from?" />
+                            <strong className='right-type mt-2 mr-3'>PO Number :</strong>
+                            <Form.Control
+                                className="w-50"
+                                name="po_number"
+                                type="text"
+                                placeholder="Who is this invoice from?"
+                                alue={invoiceStore.getPONumber()}
+                                onChange={(e) => { invoiceStore.setPONumber(e.target.value) }} />
                         </Stack>
 
                     </Col>
                 </Row>
-                <Row>
-                    <Col sx={7}>
 
-                    </Col>
-                    <Col sx={5}>
-                        <br /><br /><br />
-                        <p className="addressDriver">
-                            <strong th: text="${driver.getCompanyName()}">Société VTC</strong><br />
-                            Réf. Client <em th: text="${driver.getUserId()}">Référence client</em><br />
-                            <span th: text="${driver.getFirstName()}">Prénom</span> <span
-                                th: text="${driver.getLastName()}">NOM</span><br />
-                            <span th: text="${driver.getAddress()}">adresse</span><br />
-                            <span th: text="${driver.getZipCode()}">code postal</span> <span
-                                th: text="${driver.getCity()}">VILLE</span>
-                        </p>
-                    </Col>
-                </Row>
                 <br />
                 <br />
-                <h6>Frais de services MYSAM du <span th: text="${start}">date</span> au <span th: text="${end}">date</span>
-                </h6>
-                <br />
+
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th>Description</th>
-                            <th>Quantité</th>
-                            <th>Unité</th>
-                            <th>PU TTC</th>
-                            <th>TVA</th>
-                            <th className="text-right">Total HT</th>
-                            <th className="text-right">Total TTC</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Frais de service MySam à 5% pour la période du <span th: text="${start}">date</span> au <span
-                                th: text="${end}">date</span></td>
-                            <td>13</td>
-                            <td>Kilomètres</td>
-                            <td className="text-right">1,20€</td>
-                            <td>20%</td>
-                            <td className="text-right" th: text="${summaryDriverClientsPayment.get('mysamHT')}">0,00€</td>
-                            <td className="text-right" th: text="${summaryDriverClientsPayment.get('mysamTTC')}">0,00€</td>
-                        </tr>
-                        <tr>
-                            <td>Frais de service MySam à 10% pour la période du <span th: text="${start}">date</span> au <span
-                                th: text="${end}">date</span></td>
-                            <td>15</td>
-                            <td>Minutes</td>
-                            <td className="text-right">0,25€</td>
-                            <td>20%</td>
-                            <td className="text-right" th: text="${summaryDriverPayment.get('mysamHT')}">0,00€</td>
-                            <td className="text-right" th: text="${summaryDriverPayment.get('mysamTTC')}">0,00€</td>
-                        </tr>
-                        <tr>
-                            <td>Pénalités d'annulation</td>
-                            <td>5</td>
-                            <td>Minutes</td>
-                            <td className="text-right">-10€</td>
-                            <td>20%</td>
-                            <td className="text-right" th: text="${summaryPenalties.get('driverHT')}">0,00€</td>
-                            <td className="text-right" th: text="${summaryPenalties.get('driverTTC')}">0,00€</td>
-                        </tr>
+                        {invoiceStore.getItems().map(
+                            item => {
+                                return (
+                                    <tr id={`item${item.id}`}>
+                                        <td style={{ width: "700px" }}>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Description of Service or Product"
+                                                value={item.description}
+                                                onChange={(e) => { invoiceStore.updateItem(item.id, "description", e.target.value) }} />
+                                        </td>
+
+                                        <td >
+                                            <Form.Control
+                                                type="number"
+                                                placeholder='1'
+                                                value={item.quantity}
+                                                onChange={(e) => { invoiceStore.updateItem(item.id, "quantity", e.target.value) }} />
+                                        </td>
+
+                                        <td>
+                                            <Form.Control
+                                                type="number"
+                                                placeholder='$'
+                                                value={item.rate}
+                                                onChange={(e) => { invoiceStore.updateItem(item.id, "rate", e.target.value) }} />
+                                        </td>
+
+                                        <td ><h6 className='mt-2 mr-3'>{(item.rate * item.quantity).toFixed(2)} $</h6></td>
+                                    </tr>)
+                            }
+                        )}
                     </tbody>
                 </table>
                 <Row>
@@ -191,7 +212,7 @@ const Invoice = observer(() => {
                     IBAN FR76 1470 7034 0031 4211 7882 825 - SWIFT CCBPFRPPMTZ
                 </p>
             </div>
-        </div>
+        </div >
     )
 })
 export default Invoice
