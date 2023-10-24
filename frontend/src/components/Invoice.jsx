@@ -1,28 +1,41 @@
 import { useState } from 'react'
+import Figure from 'react-bootstrap/Figure';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
+import Form from 'react-bootstrap/Form';
 
 function Invoice() {
-
     return (
-        <div class="container">
+        <div style={{ width: "100%" }}>
             <div class="invoice">
-                <div class="row">
-                    <div class="col-7">
-                        <img src="http://mysam.fr/wp-content/uploads/2016/06/logo_facture.jpg" class="logo" />
-                    </div>
-                    <div class="col-5">
+                <Row>
+                    <Col sx={7}>
+                        <Figure>
+                            <Figure.Image
+                                width={171}
+                                height={180}
+                                alt="171x180"
+                                src="/assets/picture.jpg"
+                            />
+                            <Figure.Caption>
+                                Add Your Logo
+                            </Figure.Caption>
+                        </Figure>
+                    </Col>
+                    <Col sx={5}>
                         <h1 class="document-type display-4">FACTURE</h1>
                         <p class="text-right"><strong th: text="${invoiceReference}">Référence facture</strong></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-7">
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sx={7}>
                         <p class="addressMySam">
-                            <strong>MYSAM</strong><br />
-                            8 avenue de la Martelle<br />
-                            81150 Terssac
+                            <strong>Who is this invoice from? (required)</strong>
+                            <br /><br />
+                            <Form.Control type="text" placeholder="Normal text" />
                         </p>
-                    </div>
-                    <div class="col-5">
+                    </Col>
+                    <Col sx={5}>
                         <br /><br /><br />
                         <p class="addressDriver">
                             <strong th: text="${driver.getCompanyName()}">Société VTC</strong><br />
@@ -33,8 +46,8 @@ function Invoice() {
                             <span th: text="${driver.getZipCode()}">code postal</span> <span
                                 th: text="${driver.getCity()}">VILLE</span>
                         </p>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 <br />
                 <br />
                 <h6>Frais de services MYSAM du <span th: text="${start}">date</span> au <span th: text="${end}">date</span>
@@ -84,7 +97,7 @@ function Invoice() {
                         </tr>
                     </tbody>
                 </table>
-                <div class="row">
+                <Row>
                     <div class="col-8">
                     </div>
                     <div class="col-4">
@@ -103,7 +116,7 @@ function Invoice() {
                             </tr>
                         </table>
                     </div>
-                </div>
+                </Row>
 
                 <p class="conditions">
                     En votre aimable règlement
@@ -134,6 +147,6 @@ function Invoice() {
                 </p>
             </div>
         </div>
-)
+    )
 }
 export default Invoice
