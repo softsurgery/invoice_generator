@@ -106,6 +106,10 @@ class InvoiceStore {
         }
     }
 
+    addItem() {
+        this.items.push(this.createItem(this.items.length));
+    }
+
     updateItem(index=0,key,value){
         this.items[index][key] = value;
     }

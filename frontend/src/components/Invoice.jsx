@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
+import Button from 'react-bootstrap/Button';
 import { observer } from "mobx-react";
 import invoiceStore from '../data/InvoiceStore';
 
@@ -122,6 +123,7 @@ const Invoice = observer(() => {
                 <table className="table table-striped">
                     <thead>
                         <tr>
+                            <th ></th>
                             <th>Item</th>
                             <th>Quantity</th>
                             <th>Rate</th>
@@ -132,7 +134,12 @@ const Invoice = observer(() => {
                         {invoiceStore.getItems().map(
                             item => {
                                 return (
+                                    
                                     <tr id={`item${item.id}`}>
+                                      <Button
+                    variant="success"
+                    onClick={() => invoiceStore.addItem()}
+                >Add Item</Button>{' '}  
                                         <td style={{ width: "700px" }}>
                                             <Form.Control
                                                 type="text"
@@ -157,12 +164,18 @@ const Invoice = observer(() => {
                                                 onChange={(e) => { invoiceStore.updateItem(item.id, "rate", e.target.value) }} />
                                         </td>
 
-                                        <td ><h6 className='mt-2 mr-3'>{(item.rate * item.quantity).toFixed(2)} $</h6></td>
+                                        <td style={{ width: "100px" }}>
+                                            <h6 className='mt-2 mr-3'>{(item.rate * item.quantity).toFixed(2)} $</h6>
+                                        </td>
                                     </tr>)
                             }
                         )}
                     </tbody>
                 </table>
+                <Button
+                    variant="success"
+                    onClick={() => invoiceStore.addItem()}
+                >Add Item</Button>{' '}
                 <Row>
                     <div className="col-8">
                     </div>
