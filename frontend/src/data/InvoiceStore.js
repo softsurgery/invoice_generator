@@ -3,7 +3,7 @@ import { makePersistable } from 'mobx-persist-store';
 
 class InvoiceStore {
     auto = -1
-    id = 0
+    id = ""
     company = ""
     date = ""
     payement_terms = ""

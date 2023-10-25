@@ -7,6 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
+
 import { observer } from "mobx-react";
 import invoiceStore from '../data/InvoiceStore';
 
@@ -220,7 +221,9 @@ const Invoice = observer(() => {
                             No discount granted for early payment.
                             Payment by bank transfer or credit card.
                             <br /><br />
-                            In the event of late payment, fixed compensation for recovery costs: $40 (art. L.4413 and L.4416 commercial code).
+                            In the event of late payment, fixed compensation for recovery costs: 40$ 
+                            <br />
+                            (art. L.4413 and L.4416 commercial code).
                         </p>
                     </Col>
                     <Col sx={5}>

@@ -6,15 +6,16 @@ import Col from 'react-bootstrap/Col';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Invoice from './components/Invoice';
+import Footer from './components/Footer';
 
 function App() {
 
   return (<div>
     <BrowserRouter>
-    <NavbarComponent />
+      <NavbarComponent />
       <Container fluid style={{ margin: "2em" }}>
         <Row>
-          
+
         </Row>
         <Row >
           <Col xs={3}>
@@ -29,7 +30,7 @@ function App() {
             </Routes>
           </Col>
         </Row>
-
+        <Footer />
       </Container>
     </BrowserRouter>
   </div>)
