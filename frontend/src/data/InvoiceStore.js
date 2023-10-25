@@ -5,14 +5,17 @@ class InvoiceStore {
     auto = -1
     id = 0
     company = ""
-    date = "12/05/2001"
+    date = ""
     payement_terms = ""
-    due_date = "null"
-    po_number = 0
+    due_date = ""
+    po_number = ""
     bills = ""
     ships = ""
     items = [this.createItem()]
     tax = 0
+    discount = 0
+    shipping = 0
+    amount_paid = 0
 
     constructor() {
         makeAutoObservable(this, {
@@ -63,6 +66,22 @@ class InvoiceStore {
         this.items = items;
     }
 
+    setTax(tax) {
+        this.tax = tax;
+    }
+
+    setDiscount(discount) {
+        this.discount = discount;
+    }
+
+    setShipping(shipping) {
+        this.shipping = shipping;
+    }
+
+    setAmountPaid(amount_paid) {
+        this.amount_paid = amount_paid;
+    }
+
     getId() {
         return this.id;
     }
@@ -103,10 +122,22 @@ class InvoiceStore {
         return this.tax;
     }
 
-    createItem() {
+    getDiscount() {
+        return this.discount;
+    }
+
+    getShipping(){
+        return this.shipping;
+    }
+
+    getAmountPaid(){
+        return this.amount_paid;
+    }
+
+    createItem(index = 0) {
         this.auto++;
         return {
-            id: this.auto,
+            id: index==0 ? index : this.auto,
             description: "",
             quantity: 0,
             rate: 0,
@@ -129,6 +160,10 @@ class InvoiceStore {
         }
     }
 
+    clearFirstItem(){
+        this.items[0] = this.createItem();
+    }
+
     sum(){
         let sum = 0;
         this.items.forEach(item => {
@@ -137,6 +172,13 @@ class InvoiceStore {
         return sum;
     }
 
+    getTTC(){
+        return this.sum() * (1 + Number(this.tax-this.discount)/100) + Number(this.shipping)
+    }
+
+    getBalanceDue(){
+        return this.getTTC() - this.amount_paid
+    }
 
 }
 

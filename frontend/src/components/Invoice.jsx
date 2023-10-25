@@ -67,6 +67,7 @@ const Invoice = observer(() => {
                                 placeholder="Invoice ID"
                                 name="id"
                                 type="number"
+                                min={0}
                                 value={invoiceStore.getId()}
                                 onChange={(e) => { invoiceStore.setId(e.target.value) }} />
                         </InputGroup>
@@ -152,6 +153,7 @@ const Invoice = observer(() => {
                                         <td style={{ width: "10%" }}>
                                             <Form.Control
                                                 type="number"
+                                                min={0}
                                                 placeholder="1"
                                                 value={item.quantity}
                                                 onChange={(e) => {
@@ -162,6 +164,7 @@ const Invoice = observer(() => {
                                         <td style={{ width: "10%" }}>
                                             <Form.Control
                                                 type="number"
+                                                min={0}
                                                 placeholder="$"
                                                 value={item.rate}
                                                 onChange={(e) => {
@@ -176,7 +179,15 @@ const Invoice = observer(() => {
                                         </td>
                                         {isFirstItem ? (
                                             <td>
-                                                <div style={{ width: "100px" }}> </div>
+                                                <Button
+                                                style={{width:"73px"}}
+                                                    variant="danger"
+                                                    onClick={() => 
+                                                        invoiceStore.clearFirstItem()
+                                                    }
+                                                >
+                                                    Clear
+                                                </Button>
                                             </td>
                                         ) : (
                                             <td style={{ width: "5%" }}>
@@ -194,73 +205,118 @@ const Invoice = observer(() => {
                         }
                     </tbody>
                 </table>
-                <Button
-                    variant="success"
-                    onClick={() => invoiceStore.addItem()}
-                >Add Item</Button>{' '}
                 <Row>
-                    <Col xs={6}>
+                    <Col sx={7}>
+                        <Button
+                            variant="success"
+                            onClick={() => invoiceStore.addItem()}
+                        >Add Item</Button>{' '}
+
+                        <p className="conditions mt-5">
+                            For your kind settlement
+                            And with our thanks.
+                            <br /><br />
+                            Payment terms: payment upon receipt of invoice.
+                            No discount granted for early payment.
+                            Payment by bank transfer or credit card.
+                            <br /><br />
+                            In the event of late payment, fixed compensation for recovery costs: $40 (art. L.4413 and L.4416 commercial code).
+                        </p>
                     </Col>
-                    <Col>
+                    <Col sx={5}>
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
-                            <strong className='right-type mt-2 mr-3'></strong>
-                            <h5 className='right-type mt-2 mr-3'>
-                                Total HT : 
-                            </h5>
-                            <Form.Control
-                                className="w-25"
-                                type="number"
-                                disabled
-                                placeholder="%"
-                                value={invoiceStore.sum()}
-                                onChange={(e) => { invoiceStore.setPONumber(e.target.value) }} /><span>$</span>
+                            <strong className='right-type mt-2 mr-3'>Discount :</strong>
+                            <InputGroup className="w-50">
+                                <Form.Control
+                                    type="number"
+                                    value={invoiceStore.getDiscount()}
+                                    min={0}
+                                    max={100}
+                                    onChange={(e) => { invoiceStore.setDiscount(e.target.value) }} />
+                                <InputGroup.Text >%</InputGroup.Text>
+                            </InputGroup>
                         </Stack>
 
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
-                            <strong className='right-type mt-2 mr-3'></strong>
-                            <h5 className='right-type mt-2 mr-3'>TVA:</h5>
-                            <Form.Control
-                                className="w-25"
-                                type="number"
-                                placeholder="%"
-                                value={invoiceStore.getTax()}
-                                onChange={(e) => { invoiceStore.setPONumber(e.target.value) }} />
+                            <strong className='right-type mt-2 mr-3'>Tax :</strong>
+                            <InputGroup className="w-50">
+                                <Form.Control
+                                    type="number"
+                                    min={0}
+                                    value={invoiceStore.getTax()}
+                                    onChange={(e) => { invoiceStore.setTax(e.target.value) }} />
+                                <InputGroup.Text >%</InputGroup.Text>
+                            </InputGroup>
                         </Stack>
 
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
-                            <strong className='right-type mt-2 mr-3'></strong>
-                            <h5 className='right-type mt-2 mr-3'>Total TTC :<span style={{ marginLeft: "42px" }}>{invoiceStore.sum()} $</span></h5>
+                            <strong className='right-type mt-2 mr-3'>Shipping :</strong>
+                            <InputGroup className="w-50">
+                                <Form.Control
+                                    type="number"
+                                    min={0}
+                                    value={invoiceStore.getShipping()}
+                                    onChange={(e) => { invoiceStore.setShipping(e.target.value) }} />
+                                <InputGroup.Text >$</InputGroup.Text>
+                            </InputGroup>
+                        </Stack>
+
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'>Total HT :</strong>
+                            <InputGroup className="w-50">
+                                <Form.Control
+                                    disabled
+                                    type="number"
+                                    value={invoiceStore.sum().toFixed(2)} />
+                                <InputGroup.Text >$</InputGroup.Text>
+                            </InputGroup>
+                        </Stack>
+
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'>Total TTC :</strong>
+                            <InputGroup className="w-50">
+                                <Form.Control
+                                    disabled
+                                    type="number"
+                                    value={invoiceStore.getTTC().toFixed(2)}
+                                />
+                                <InputGroup.Text >$</InputGroup.Text>
+                            </InputGroup>
+                        </Stack>
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'>Amount Paid</strong>
+                            <InputGroup className="w-50">
+                                <Form.Control
+                                    type="number"
+                                    value={invoiceStore.getAmountPaid()}
+                                    onChange={(e) => { invoiceStore.setAmountPaid(e.target.value) }}
+                                />
+                                <InputGroup.Text >$</InputGroup.Text>
+                            </InputGroup>
+                        </Stack>
+                        <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
+                            <strong className='right-type mt-2 mr-3'>Balance Due</strong>
+                            <InputGroup className="w-50">
+                                <Form.Control
+                                    disabled
+                                    type="number"
+                                    value={invoiceStore.getBalanceDue().toFixed(2)}
+                                />
+                                <InputGroup.Text >$</InputGroup.Text>
+                            </InputGroup>
                         </Stack>
                     </Col>
                 </Row>
 
-                <p className="conditions">
-                    En votre aimable règlement
-                    <br />
-                    Et avec nos remerciements.
-                    <br /><br />
-                    Conditions de paiement : paiement à réception de facture.
-                    <br />
-                    Aucun escompte consenti pour règlement anticipé.
-                    <br />
-                    Règlement par virement bancaire ou carte bancaire.
-                    <br /><br />
-                    En cas de retard de paiement, indemnité forfaitaire pour frais de recouvrement : 40 euros (art. L.4413
-                    et
-                    L.4416 code du commerce).
-                </p>
 
                 <br />
-                <br />
-                <br />
-                <br />
-
-                <p className="bottom-page text-right">
+              
+                {/* <textarea className="bottom-page text-right">
                     MYSAM SAS - N° SIRET 81754802700017 RCS ALBI<br />
                     8, avenue de la Martelle - 81150 TERSSAC 06 32 97 00 22 - www.mysam.fr<br />
                     Code APE 6312Z - N° TVA Intracom. FR 63 817548027<br />
                     IBAN FR76 1470 7034 0031 4211 7882 825 - SWIFT CCBPFRPPMTZ
-                </p>
+                </textarea> */}
             </div>
         </div >
     )
