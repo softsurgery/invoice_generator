@@ -7,9 +7,13 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
-
 import { observer } from "mobx-react";
 import invoiceStore from '../data/InvoiceStore';
+import Icon from '@mdi/react';
+import { mdiPlus } from '@mdi/js';
+import { mdiDownload } from '@mdi/js';
+
+
 
 const Invoice = observer(() => {
     let index = 0
@@ -21,8 +25,7 @@ const Invoice = observer(() => {
                         <Figure>
                             <Figure.Image
                                 className='logo'
-                                width={171}
-                                height={180}
+                                width={200}
                                 alt="171x180"
                                 src="/assets/picture.jpg"
                             />
@@ -181,9 +184,9 @@ const Invoice = observer(() => {
                                         {isFirstItem ? (
                                             <td>
                                                 <Button
-                                                style={{width:"73px"}}
+                                                    style={{ width: "73px" }}
                                                     variant="danger"
-                                                    onClick={() => 
+                                                    onClick={() =>
                                                         invoiceStore.clearFirstItem()
                                                     }
                                                 >
@@ -211,7 +214,7 @@ const Invoice = observer(() => {
                         <Button
                             variant="success"
                             onClick={() => invoiceStore.addItem()}
-                        >Add Item</Button>{' '}
+                        > <Icon path={mdiPlus} size={1} /> Add Item </Button>
 
                         <p className="conditions mt-5">
                             For your kind settlement
@@ -221,7 +224,7 @@ const Invoice = observer(() => {
                             No discount granted for early payment.
                             Payment by bank transfer or credit card.
                             <br /><br />
-                            In the event of late payment, fixed compensation for recovery costs: 40$ 
+                            In the event of late payment, fixed compensation for recovery costs: 40$
                             <br />
                             (art. L.4413 and L.4416 commercial code).
                         </p>
@@ -313,7 +316,10 @@ const Invoice = observer(() => {
 
 
                 <br />
-              
+                <Button
+                    variant="success"
+                    onClick={() => invoiceStore.addItem()}
+                ><Icon path={mdiDownload} size={1} /> Download Invoice</Button>{' '}
                 {/* <textarea className="bottom-page text-right">
                     MYSAM SAS - N° SIRET 81754802700017 RCS ALBI<br />
                     8, avenue de la Martelle - 81150 TERSSAC 06 32 97 00 22 - www.mysam.fr<br />

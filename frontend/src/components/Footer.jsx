@@ -1,8 +1,8 @@
 function Footer(){
     return (
-        <footer class="page-footer text-center text-md-left pt-4">
-            <div class="footer text-center">
-                <div class="container-fluid">
+        <footer className="page-footer text-center text-md-left pt-4">
+            <div className="footer text-center">
+                <div className="container-fluid">
                     <a href="https://github.com/softsurgery"> @softsurgery </a> {new Date().getFullYear()} 
                 </div>
             </div>

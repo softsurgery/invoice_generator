@@ -25,7 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Invoice />} />
               <Route path="history" element={<h1>History</h1>} />
-              <Route path="guide" element={<h1>Guide</h1>} />
+              <Route path="api" element={<h1>Guide</h1>} />
               <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
           </Col>
