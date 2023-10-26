@@ -20,6 +20,7 @@ const Invoice = observer(() => {
     const imageInputRef = useRef(null);
 
     const handleFileChange = (e) => {
+        console.log("from comp ", e.target.files[0])
         invoiceStore.setLogo(e.target.files[0])
     };
 
@@ -33,8 +34,8 @@ const Invoice = observer(() => {
                                 className='logo'
                                 alt="logo"
                                 src={typeof invoiceStore.logo === 'string' ? invoiceStore.logo
-                                : invoiceStore.logo ? URL.createObjectURL(invoiceStore.logo)
-                                    : "/assets/picture.png"}
+                                    : invoiceStore.logo ? URL.createObjectURL(invoiceStore.logo)
+                                        : "/assets/picture.png"}
                                 onClick={(e) => { imageInputRef.current.click() }}
                             />
                             <Figure.Caption style={{ textAlign: "center" }}>
@@ -44,7 +45,7 @@ const Invoice = observer(() => {
                                 id="fileInput"
                                 type="file"
                                 accept="image/*"
-                                onChange={handleFileChange}
+                                onChange={(e) => handleFileChange(e)}
                                 style={{ display: "none" }}
                                 ref={imageInputRef}
                             />
@@ -52,7 +53,13 @@ const Invoice = observer(() => {
                         <br />
                         <strong>Who is this invoice from? (required)</strong>
                         <br />
-                        <Form.Control name="company" type="text" placeholder="Who is this invoice from?" className="mt-2" />
+                        <Form.Control
+                            name="company"
+                            type="text"
+                            placeholder="Who is this invoice from?"
+                            className="mt-2"
+                            value={invoiceStore.getCompany()}
+                            onChange={(e) => { invoiceStore.setCompany(e.target.value) }} />
                         <Row className="mt-2" >
                             <Col xs={6}>
                                 <strong>Bill To</strong>
@@ -185,16 +192,16 @@ const Invoice = observer(() => {
                                             <Form.Control
                                                 type="number"
                                                 min={0}
-                                                placeholder="$"
+                                                placeholder={invoiceStore.getCurrency()}
                                                 value={item.rate}
                                                 onChange={(e) => {
                                                     invoiceStore.updateItem(item.id, "rate", e.target.value);
                                                 }}
                                             />
                                         </td>
-                                        <td style={{ width: "10%" }}>
+                                        <td style={{ width: "15%" }}>
                                             <h6 className="mt-2 mr-3">
-                                                {(item.rate * item.quantity).toFixed(2)} $
+                                                {(item.rate * item.quantity).toFixed(2)} {invoiceStore.getCurrency()}
                                             </h6>
                                         </td>
                                         {isFirstItem ? (
@@ -240,7 +247,7 @@ const Invoice = observer(() => {
                             No discount granted for early payment.
                             Payment by bank transfer or credit card.
                             <br /><br />
-                            In the event of late payment, fixed compensation for recovery costs: 40$
+                            In the event of late payment, fixed compensation for recovery costs: 40{invoiceStore.getCurrency()}
                             <br />
                             (art. L.4413 and L.4416 commercial code).
                         </p>
@@ -279,7 +286,7 @@ const Invoice = observer(() => {
                                     min={0}
                                     value={invoiceStore.getShipping()}
                                     onChange={(e) => { invoiceStore.setShipping(e.target.value) }} />
-                                <InputGroup.Text >$</InputGroup.Text>
+                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
 
@@ -290,7 +297,7 @@ const Invoice = observer(() => {
                                     disabled
                                     type="number"
                                     value={invoiceStore.sum().toFixed(2)} />
-                                <InputGroup.Text >$</InputGroup.Text>
+                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
 
@@ -302,7 +309,7 @@ const Invoice = observer(() => {
                                     type="number"
                                     value={invoiceStore.getTTC().toFixed(2)}
                                 />
-                                <InputGroup.Text >$</InputGroup.Text>
+                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
@@ -313,7 +320,7 @@ const Invoice = observer(() => {
                                     value={invoiceStore.getAmountPaid()}
                                     onChange={(e) => { invoiceStore.setAmountPaid(e.target.value) }}
                                 />
-                                <InputGroup.Text >$</InputGroup.Text>
+                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
@@ -324,7 +331,7 @@ const Invoice = observer(() => {
                                     type="number"
                                     value={invoiceStore.getBalanceDue().toFixed(2)}
                                 />
-                                <InputGroup.Text >$</InputGroup.Text>
+                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
                     </Col>
@@ -334,6 +341,11 @@ const Invoice = observer(() => {
                 <br />
                 <Button
                     variant="success"
+                    onClick={() => {
+                        if (!invoiceStore.getLogo()) alert("image failed")
+                        else invoiceStore.sendDataToServer()
+                    }
+                    }
                 ><Icon path={mdiDownload} size={1} /> Download Invoice</Button>{' '}
                 {/* <textarea className="bottom-page text-right">
                     MYSAM SAS - N° SIRET 81754802700017 RCS ALBI<br />

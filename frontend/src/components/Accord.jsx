@@ -1,7 +1,12 @@
 import Accordion from "react-bootstrap/Accordion";
 import Icon from "@mdi/react";
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { mdiImageArea } from "@mdi/js";
 import { mdiFormatFloatLeft } from "@mdi/js";
+import { mdiCash } from "@mdi/js";
+import invoiceStore from "../data/InvoiceStore";
+import { currencies } from "../data/currencyList";
 
 function Accord() {
   return (
@@ -62,6 +67,32 @@ function Accord() {
               Make sure your logo is in the right format and dimensions.
             </li>
           </ul>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="2">
+        <Accordion.Header>
+          <Icon path={mdiCash} size={2} />
+          <h5 className="m-2">Currency</h5>
+        </Accordion.Header>
+        <Accordion.Body>
+          <strong className="mt-2">
+            Change Currency:
+          </strong>
+          <br />
+          <InputGroup className="mt-2">
+            <Form.Select
+              onChange={(e) => { invoiceStore.setCurrency(e.target.value) }}>
+                {currencies.map(curr => {
+                  return (<option 
+                            key ={curr.name} 
+                            value={curr.code + " " + curr.symbol}>
+                              {curr.code} {curr.symbol}
+                          </option>)
+                })}
+              
+            </Form.Select>
+          </InputGroup>
+
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
