@@ -16,7 +16,7 @@ import { mdiDownload } from '@mdi/js';
 
 const Invoice = observer(() => {
     let index = 0
-
+    
     const imageInputRef = useRef(null);
 
     const handleFileChange = (e) => {

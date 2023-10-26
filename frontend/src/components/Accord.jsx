@@ -81,15 +81,19 @@ function Accord() {
           <br />
           <InputGroup className="mt-2">
             <Form.Select
-              onChange={(e) => { invoiceStore.setCurrency(e.target.value) }}>
-                {currencies.map(curr => {
-                  return (<option 
-                            key ={curr.name} 
-                            value={curr.code + " " + curr.symbol}>
-                              {curr.code} {curr.symbol}
-                          </option>)
-                })}
-              
+              onChange={(e) => {
+                invoiceStore.setCurrency(e.target.value)
+              }} 
+              size='sm'
+              >
+              {currencies.map(curr => {
+                return (<option
+                  key={curr.name}
+                  value={curr.code + " " + curr.symbol}>
+                  {curr.code} {curr.symbol}
+                </option>)
+              })}
+
             </Form.Select>
           </InputGroup>
 
