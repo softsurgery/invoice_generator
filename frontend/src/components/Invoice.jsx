@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 
 import Figure from 'react-bootstrap/Figure';
 import Row from 'react-bootstrap/esm/Row';
@@ -14,9 +14,15 @@ import { mdiPlus } from '@mdi/js';
 import { mdiDownload } from '@mdi/js';
 
 
-
 const Invoice = observer(() => {
     let index = 0
+
+    const imageInputRef = useRef(null);
+
+    const handleFileChange = (e) => {
+        invoiceStore.setLogo(e.target.files[0])
+    };
+
     return (
         <div style={{ width: "100%" }}>
             <div className="invoice">
@@ -25,13 +31,23 @@ const Invoice = observer(() => {
                         <Figure>
                             <Figure.Image
                                 className='logo'
-                                width={200}
-                                alt="171x180"
-                                src="/assets/picture.jpg"
+                                alt="logo"
+                                src={typeof invoiceStore.logo === 'string' ? invoiceStore.logo
+                                : invoiceStore.logo ? URL.createObjectURL(invoiceStore.logo)
+                                    : "/assets/picture.png"}
+                                onClick={(e) => { imageInputRef.current.click() }}
                             />
                             <Figure.Caption style={{ textAlign: "center" }}>
                                 Add Your Logo
                             </Figure.Caption>
+                            <input
+                                id="fileInput"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                style={{ display: "none" }}
+                                ref={imageInputRef}
+                            />
                         </Figure>
                         <br />
                         <strong>Who is this invoice from? (required)</strong>
@@ -64,7 +80,7 @@ const Invoice = observer(() => {
                     </Col>
                     <Col sx={5}>
                         <h1 className="justify-content-end">INVOICE</h1>
-                        <p className="justify-content-end"><strong>Invoice Reference</strong></p>
+                        <p className="justify-content-end"><strong>Invoice Reference :</strong></p>
                         <InputGroup className="mb-3 justify-content-end">
                             <InputGroup.Text>#</InputGroup.Text>
                             <Form.Control
@@ -318,7 +334,6 @@ const Invoice = observer(() => {
                 <br />
                 <Button
                     variant="success"
-                    onClick={() => invoiceStore.addItem()}
                 ><Icon path={mdiDownload} size={1} /> Download Invoice</Button>{' '}
                 {/* <textarea className="bottom-page text-right">
                     MYSAM SAS - N° SIRET 81754802700017 RCS ALBI<br />

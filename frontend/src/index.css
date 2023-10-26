@@ -6,12 +6,13 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
 body {
   overflow-x: hidden;
+  margin: 0;
 }
 
 h6 {
@@ -31,7 +32,14 @@ h6 {
 }
 
 .logo {
+  width: 200px;
+  height: 200px;
   border-radius: 10px;
+}
+
+.logo:hover {
+  transform: scale(0.95);
+  transition: transform 0.1s ease-in;
 }
 
 .right-type {
@@ -46,4 +54,13 @@ h6 {
 
 .bottom-page {
   font-size: 0.7em;
+}
+
+.page-footer {
+  margin-top: 2em;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+  padding: 10px;
 }

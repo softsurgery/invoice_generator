@@ -5,6 +5,7 @@ class InvoiceStore {
     auto = -1
     id = ""
     company = ""
+    logo = null
     date = ""
     payement_terms = ""
     due_date = ""
@@ -26,7 +27,12 @@ class InvoiceStore {
             setDueDate: action,
             setPONumber: action,
             setBills: action,
-            setShips: action
+            setShips: action,
+            setItems:action,
+            setTax: action,
+            setDiscount: action,
+            setShipping: action,
+            setAmountPaid: action,
         });
     }
 
@@ -82,6 +88,10 @@ class InvoiceStore {
         this.amount_paid = amount_paid;
     }
 
+    setLogo(logo) {
+        this.logo = logo;
+    }
+
     getId() {
         return this.id;
     }
@@ -132,6 +142,10 @@ class InvoiceStore {
 
     getAmountPaid(){
         return this.amount_paid;
+    }
+
+    getLogo(){
+        return this.logo;
     }
 
     createItem(index = 0) {

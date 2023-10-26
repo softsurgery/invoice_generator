@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import NavbarComponent from './components/Navbar'
 import Accord from './components/Accord';
 import Row from 'react-bootstrap/Row';
@@ -14,9 +13,6 @@ function App() {
     <BrowserRouter>
       <NavbarComponent />
       <Container fluid style={{ margin: "2em" }}>
-        <Row>
-
-        </Row>
         <Row >
           <Col xs={3}>
             <Accord />
@@ -25,7 +21,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Invoice />} />
               <Route path="history" element={<h1>History</h1>} />
-              <Route path="api" element={<h1>Guide</h1>} />
+              <Route path="api" element={<h1>API</h1>} />
               <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
           </Col>

@@ -5,7 +5,7 @@ import { mdiFormatFloatLeft } from "@mdi/js";
 
 function Accord() {
   return (
-    <Accordion>
+    <Accordion >
       <Accordion.Item eventKey="0">
         <Accordion.Header>
           <Icon path={mdiFormatFloatLeft} size={2} />

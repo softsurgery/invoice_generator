@@ -1,0 +1,157 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+  crossorigin="anonymous"
+/>
+<style>
+  body {
+    background: #ffffff;
+    font-size: 0.6em;
+    margin: 0;
+  }
+
+  h6 {
+    font-size: 1em;
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .invoice {
+    background: #fff;
+    width: 100%;
+    padding: 50px;
+  }
+
+  .logo {
+    width: 4cm;
+  }
+
+  .document-type {
+    text-align: right;
+    color: #444;
+  }
+
+  .conditions {
+    font-size: 2em;
+    color: #666;
+  }
+
+  .bottom-page {
+    font-size: 0.7em;
+  }
+</style>
+
+<div class="container">
+  <div class="invoice">
+    <div class="row">
+      <div class="col-7">
+        <img
+          src="http://mysam.fr/wp-content/uploads/2016/06/logo_facture.jpg"
+          width="200"
+          class="logo"
+          id="logo"
+        />
+      </div>
+      <div class="col-5">
+        <h1 class="document-type display-4">INVOICE</h1>
+        <p class="text-right">
+          <strong>Invoice Reference :</strong>
+          <br />
+          <span id="id">#</span>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-7">
+        <p class="addressMySam">
+          <strong id="company">MYSAM</strong>
+          <br />
+          <span id="bills"></span>8 avenue de la Martelle<br />
+          <span id="ships">81150 Terssac</span>
+        </p>
+      </div>
+      <div class="col-5">
+        <br /><br /><br />
+        <p class="addressDriver">
+          Date :<span id="date"></span><br />
+          Payment Terms :<span id="payment_terms"></span><br />
+          Due Date :<span id="due_date"></span><br />
+          PO Number :<span id="po_number"></span>
+        </p>
+      </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th class="text-right">Rate</th>
+          <th class="text-right">Amount</th>
+        </tr>
+      </thead>
+      <tbody id="items">
+        <tr>
+          <td style="width: 65%">X</td>
+          <td>20%</td>
+          <td class="text-right">0,00€</td>
+          <td class="text-right">0,00€</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col-8"></div>
+      <div class="col-4">
+        <table class="table table-sm text-right">
+          <tr>
+            <td><strong>Discount :</strong></td>
+            <td class="text-right" id="discount">0,00€</td>
+          </tr>
+          <tr>
+            <td><strong>Tax :</strong></td>
+            <td class="text-right" id="tax">0,00€</td>
+          </tr>
+          <tr>
+            <td><strong>Shipping :</strong></td>
+            <td class="text-right" id="shipping">0,00€</td>
+          </tr>
+          <tr>
+            <td><strong>Total HT :</strong></td>
+            <td class="text-right" id="total_ht">0,00€</td>
+          </tr>
+          <tr>
+            <td><strong>Total TTC :</strong></td>
+            <td class="text-right" id="total_ttc">0,00€</td>
+          </tr>
+          <tr>
+            <td><strong>Amount Paid :</strong></td>
+            <td class="text-right" id="amount_paid">0,00€</td>
+          </tr>
+          <tr>
+            <td><strong>Balance Due :</strong></td>
+            <td class="text-right" id="balance_due">0,00€</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <br />
+    <p class="conditions">
+      For your kind settlement And with our thanks.
+      <br /><br />
+      Payment terms: payment upon receipt of invoice. No discount granted for
+      early payment. Payment by bank transfer or credit card.
+      <br /><br />
+      In the event of late payment, fixed compensation for recovery costs: 40$
+      <br />
+      (art. L.4413 and L.4416 commercial code).
+    </p>
+  </div>
+</div>
