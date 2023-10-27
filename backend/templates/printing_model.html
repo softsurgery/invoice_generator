@@ -6,10 +6,12 @@
   type="text/css"
 />
 <style>
+  *{
+    margin: 0;
+  }
   body {
     background: #ffffff;
     font-size: 0.6em;
-    margin: 0;
   }
 
   h6 {
@@ -64,21 +66,16 @@
           src="{{ url_for('static', filename=invoice['picture']) }}"
           width="200"
         />
-        <br />
-        <br />
       </div>
-      <div class="col-2">
+      <div class="col-5">
         <h1 class="document-type display-4">INVOICE</h1>
         <p class="text-right">
-          <strong> Invoice Reference : </strong>
-          <br />
-          <span> # </span>
-          <span id="id">{{ invoice['informations']['id'] }}</span>
+          <strong> Invoice Reference : # {{ invoice['informations']['id'] }}</strong>
         </p>
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col-7">
         <p class="addressMySam">
           <strong>
             <strong> from </strong>
@@ -91,7 +88,7 @@
           <span id="ships"> {{ invoice['informations']['ships'] }}</span>
         </p>
       </div>
-      <div class="col-6">
+      <div class="col-5">
         <br />
         <br />
         <br />
@@ -239,7 +236,6 @@
   </div>
 </div>
 <script type="text/javascript">
-  // Add this JavaScript code to your HTML file
   window.onload = function () {
     window.print();
   };

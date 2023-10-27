@@ -1,8 +1,10 @@
-from flask import Flask, request, jsonify, redirect, render_template
+from flask import Flask, request, jsonify, redirect, render_template,send_file
 from flask_cors import CORS, cross_origin
 import os
 import json
 import uuid
+from convertPDF import generate_pdf
+import asyncio
 
 def add_attribute(dictionary, name, value):
     dictionary[name] = value
@@ -23,10 +25,7 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 queue = []
 
-
-@app.route('/process_json', methods=['POST'])
-@cross_origin()
-def process_json():
+def prepare_invoice(request):
     data = request.form.to_dict()
     logo_file = request.files.get('logo')
 
@@ -62,7 +61,6 @@ def process_json():
             items = []
         result = {key: data.get(key, default_value) for key, default_value in expected_keys}
         
-
         if logo_file:
             logo_filename = os.path.join(app.config['UPLOAD_FOLDER'], logo_file.filename)
             logo_file.save(logo_filename)
@@ -73,16 +71,40 @@ def process_json():
             "items": items,
             "picture": logo_file.filename
         })
-        return {"redirectURL": f"http://127.0.0.1:5001/model/{request_id}"}
-    
+        return request_id
+    return None
+
+@app.route('/print', methods=['POST'])
+@cross_origin()
+def print_invoice():
+    request_id = prepare_invoice(request)
+    if request_id:
+        return {"redirectURL": f"http://127.0.0.1:5001/printing_model/{request_id}"}
     return jsonify({'error': 'Invalid JSON format'})
 
-@app.route('/model/<id>')
+@app.route('/download', methods=['POST'])
 @cross_origin()
-def get_model(id):
+def download_invoice():
+    request_id = prepare_invoice(request)
+    if request_id:
+        return {"redirectURL": f"http://127.0.0.1:5001/downloading_model/{request_id}"}
+    return jsonify({'error': 'Invalid JSON format'})
+
+@app.route('/printing_model/<id>')
+@cross_origin()
+def print(id):
     invoice = [item for item in queue if item["id"] == id]
     if invoice:
-        return render_template('./model.html',invoice=invoice[0])
+        return render_template('./printing_model.html',invoice=invoice[0])
+    else:
+        return jsonify({'error': "queue doesn't contain invoice"})
+
+@app.route('/downloading_model/<id>')
+@cross_origin()
+def download(id):
+    invoice = [item for item in queue if item["id"] == id]
+    if invoice:
+        return render_template('./downloading_model.html',invoice=invoice[0])
     else:
         return jsonify({'error': "queue doesn't contain invoice"})
 

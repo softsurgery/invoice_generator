@@ -209,10 +209,8 @@ class InvoiceStore {
     return this.getTTC() - this.amount_paid;
   }
 
-  sendDataToServer() {
-    // Create a new FormData object to construct a multipart/form-data request
-
-    const data = {
+  collectData(){
+    return {
       id: this.getId(),
       company: this.getCompany(),
       date: this.getDate(),
@@ -232,9 +230,30 @@ class InvoiceStore {
       balance_due:this.getBalanceDue().toFixed(2),
       currency: this.getCurrency()
     };
+  }
 
-    axios
-    .post("http://127.0.0.1:5001/process_json", data, {
+  print() {
+    axios.post("http://127.0.0.1:5001/print", this.collectData(), {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      console.log("Server response:", response.data);
+      
+      const redirectURL = response.data.redirectURL;
+      
+      if (redirectURL) {
+        window.open(redirectURL, "_blank");
+      }
+    })
+    .catch((error) => {
+      console.error("Error sending data to the server:", error);
+    });
+  }
+
+  download(){
+    axios.post("http://127.0.0.1:5001/download", this.collectData(), {
       headers: {
         "Content-Type": "multipart/form-data",
       },

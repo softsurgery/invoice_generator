@@ -12,7 +12,7 @@ import invoiceStore from '../data/InvoiceStore';
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 import { mdiDownload } from '@mdi/js';
-
+import { mdiPrinter } from '@mdi/js';
 
 const Invoice = observer(() => {
     let index = 0
@@ -343,10 +343,18 @@ const Invoice = observer(() => {
                     variant="success"
                     onClick={() => {
                         if (!invoiceStore.getLogo()) alert("image failed")
-                        else invoiceStore.sendDataToServer()
+                        else invoiceStore.download()
                     }
                     }
                 ><Icon path={mdiDownload} size={1} /> Download Invoice</Button>{' '}
+                 <Button
+                    variant="primary"
+                    onClick={() => {
+                        if (!invoiceStore.getLogo()) alert("image failed")
+                        else invoiceStore.print()
+                    }
+                    }
+                ><Icon path={mdiPrinter} size={1} /> Print Invoice</Button>{' '}
                 {/* <textarea className="bottom-page text-right">
                     MYSAM SAS - N° SIRET 81754802700017 RCS ALBI<br />
                     8, avenue de la Martelle - 81150 TERSSAC 06 32 97 00 22 - www.mysam.fr<br />
