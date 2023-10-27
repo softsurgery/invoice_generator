@@ -1,252 +1,270 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link
+      crossorigin="anonymous"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      * {
+        margin: 0;
+      }
 
-<head>
-  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" rel="stylesheet"
-    type="text/css" />
-  <style>
-    * {
-      margin: 0;
-    }
+      body {
+        background: #ffffff;
+        font-size: 0.6em;
+        padding: 5%;
+      }
 
-    body {
-      background: #ffffff;
-      font-size: 0.6em;
-      padding: 5%;
-    }
+      h6 {
+        font-size: 1em;
+      }
 
-    h6 {
-      font-size: 1em;
-    }
+      span,
+      p {
+        font-size: 1.2em;
+      }
 
-    span,
-    p {
-      font-size: 1.2em;
-    }
+      strong {
+        font-size: 1em;
+      }
 
-    strong {
-      font-size: 1em;
-    }
+      .container {
+        width: 100%;
+        height: 100%;
+      }
 
-    .container {
-      width: 100%;
-      height: 100%;
-    }
+      .invoice {
+        background: #fff;
+        width: 100%;
+        padding: 50px;
+      }
 
-    .invoice {
-      background: #fff;
-      width: 100%;
-      padding: 50px;
-    }
+      .logo {
+        width: 4cm;
+      }
 
-    .logo {
-      width: 4cm;
-    }
+      .document-type {
+        text-align: right;
+        color: #444;
+      }
 
-    .document-type {
-      text-align: right;
-      color: #444;
-    }
+      .conditions {
+        font-size: 1.4em;
+        color: #666;
+      }
 
-    .conditions {
-      font-size: 1.4em;
-      color: #666;
-    }
+      .bottom-page {
+        font-size: 0.7em;
+      }
+    </style>
+  </head>
 
-    .bottom-page {
-      font-size: 0.7em;
-    }
-  </style>
-</head>
-
-<body id="root">
-  <div class="container">
-    <div class="invoice">
-      <div class="row">
-        <div class="col-7">
-          <img class="logo" id="logo" src="{{ url_for('static', filename=invoice['picture']) }}" width="200" />
+  <body id="root">
+    <div class="container">
+      <div class="invoice">
+        <div class="row">
+          <div class="col-7">
+            <img
+              class="logo"
+              id="logo"
+              src="{{ url_for('static', filename=invoice['picture']) }}"
+              width="200"
+            />
+          </div>
+          <div class="col-5">
+            <h1 class="document-type display-4">INVOICE</h1>
+            <p class="text-right">
+              <strong>
+                Invoice Reference : # {{ invoice['informations']['id']
+                }}</strong
+              >
+            </p>
+          </div>
         </div>
-        <div class="col-5">
-          <h1 class="document-type display-4">INVOICE</h1>
-          <p class="text-right">
-            <strong> Invoice Reference : # {{ invoice['informations']['id'] }}</strong>
-          </p>
+        <div class="row">
+          <div class="col-7">
+            <p class="addressMySam">
+              <strong>
+                <strong> from </strong>
+                <span id="company"
+                  >{{ invoice['informations']['company'] }}</span
+                >
+              </strong>
+              <br />
+              <strong> to </strong>
+              <span id="bills"> {{ invoice['informations']['bills'] }}</span>
+              <br />
+              <span id="ships"> {{ invoice['informations']['ships'] }}</span>
+            </p>
+          </div>
+          <div class="col-5">
+            <br />
+            <br />
+            <br />
+            <p class="addressDriver">
+              <strong> Date : </strong>
+              <span id="date"> {{ invoice['informations']['date'] }}</span>
+              <br />
+              <strong> Payment Terms : </strong>
+              <span id="payment_terms"
+                >{{ invoice['informations']['payment_terms'] }}
+              </span>
+              <br />
+              <strong> Due Date : </strong>
+              <span id="due_date">
+                {{ invoice['informations']['due_date'] }}</span
+              >
+              <br />
+              <strong> PO Number : </strong>
+              <span id="po_number">
+                {{ invoice['informations']['po_number'] }}</span
+              >
+              <br />
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-7">
-          <p class="addressMySam">
-            <strong>
-              <strong> from </strong>
-              <span id="company">{{ invoice['informations']['company'] }}</span>
-            </strong>
-            <br />
-            <strong> to </strong>
-            <span id="bills"> {{ invoice['informations']['bills'] }}</span>
-            <br />
-            <span id="ships"> {{ invoice['informations']['ships'] }}</span>
-          </p>
-        </div>
-        <div class="col-5">
-          <br />
-          <br />
-          <br />
-          <p class="addressDriver">
-            <strong> Date : </strong>
-            <span id="date"> {{ invoice['informations']['date'] }}</span>
-            <br />
-            <strong> Payment Terms : </strong>
-            <span id="payment_terms">{{ invoice['informations']['payment_terms'] }}
-            </span>
-            <br />
-            <strong> Due Date : </strong>
-            <span id="due_date"> {{ invoice['informations']['due_date'] }}</span>
-            <br />
-            <strong> PO Number : </strong>
-            <span id="po_number">
-              {{ invoice['informations']['po_number'] }}</span>
-            <br />
-          </p>
-        </div>
-      </div>
-      <br />
-      <br />
-      <br />
-      <div class="row-5">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Quantity</th>
-              <th class="text-right">Rate</th>
-              <th class="text-right">Amount</th>
-            </tr>
-          </thead>
-          <tbody id="items">
-            {% for item in invoice['items'] %}
-            <tr>
-              <td style="width: 50%">{{ item['description'] }}</td>
-              <td>{{ item['quantity'] }}</td>
-              <td class="text-right">
-                {{ item['rate'] }} {{ invoice['informations']['currency'] }}
-              </td>
-              <td class="text-right">
-                {{ item['amount'] }} {{ invoice['informations']['currency'] }}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      <div class="row">
-        <div class="col-5"></div>
-        <div class="col-7">
-          <table class="table table-sm text-right">
-            <tr>
-              <td>
-                <strong> Discount : </strong>
-              </td>
-              <td class="text-right">
-                <span id="discount">
-                  {{ invoice['informations']['discount'] }} %</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong> Tax : </strong>
-              </td>
-              <td class="text-right">
-                <span id="tax"> {{ invoice['informations']['tax'] }} %</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong> Shipping : </strong>
-              </td>
-              <td class="text-right">
-                <span id="shipping">
-                  {{ invoice['informations']['shipping'] }} {{
-                  invoice['informations']['currency'] }}
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong> Total HT : </strong>
-              </td>
-              <td class="text-right">
-                <span id="total_ht">
-                  {{ invoice['informations']['total_ht'] }} {{
-                  invoice['informations']['currency'] }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong> Total TTC : </strong>
-              </td>
-              <td class="text-right">
-                <span id="total_ttc">
-                  {{ invoice['informations']['total_ttc'] }} {{
-                  invoice['informations']['currency'] }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong> Amount Paid : </strong>
-              </td>
-              <td class="text-right">
-                <span id="amount_paid">
-                  {{ invoice['informations']['amount_paid'] }} {{
-                  invoice['informations']['currency'] }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong> Balance Due : </strong>
-              </td>
-              <td class="text-right">
-                <span id="balance_due">
-                  {{ invoice['informations']['balance_due'] }} {{
-                  invoice['informations']['currency'] }}</span>
-              </td>
-            </tr>
+        <br />
+        <br />
+        <br />
+        <div class="row-5">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th class="text-right">Rate</th>
+                <th class="text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="items">
+              {% for item in invoice['items'] %}
+              <tr>
+                <td style="width: 50%">{{ item['description'] }}</td>
+                <td>{{ item['quantity'] }}</td>
+                <td class="text-right">
+                  {{ item['rate'] }} {{ invoice['informations']['currency'] }}
+                </td>
+                <td class="text-right">
+                  {{ item['amount'] }} {{ invoice['informations']['currency'] }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
           </table>
         </div>
-        <p class="conditions">
-          For your kind settlement And with our thanks.
-          <br />
-          Payment terms: payment upon receipt of invoice. No discount granted for
-          early payment. Payment by bank transfer or credit card.
-          <br />
-          In the event of late payment, fixed compensation for recovery costs: 40
-          {{ invoice['informations']['currency'] }}
-          <br />
-          (art. L.4413 and L.4416 commercial code).
-        </p>
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-7">
+            <table class="table table-sm text-right">
+              <tr>
+                <td>
+                  <strong> Discount : </strong>
+                </td>
+                <td class="text-right">
+                  <span id="discount">
+                    {{ invoice['informations']['discount'] }} %</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong> Tax : </strong>
+                </td>
+                <td class="text-right">
+                  <span id="tax"> {{ invoice['informations']['tax'] }} %</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong> Shipping : </strong>
+                </td>
+                <td class="text-right">
+                  <span id="shipping">
+                    {{ invoice['informations']['shipping'] }} {{
+                    invoice['informations']['currency'] }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong> Total HT : </strong>
+                </td>
+                <td class="text-right">
+                  <span id="total_ht">
+                    {{ invoice['informations']['total_ht'] }} {{
+                    invoice['informations']['currency'] }}</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong> Total TTC : </strong>
+                </td>
+                <td class="text-right">
+                  <span id="total_ttc">
+                    {{ invoice['informations']['total_ttc'] }} {{
+                    invoice['informations']['currency'] }}</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong> Amount Paid : </strong>
+                </td>
+                <td class="text-right">
+                  <span id="amount_paid">
+                    {{ invoice['informations']['amount_paid'] }} {{
+                    invoice['informations']['currency'] }}</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong> Balance Due : </strong>
+                </td>
+                <td class="text-right">
+                  <span id="balance_due">
+                    {{ invoice['informations']['balance_due'] }} {{
+                    invoice['informations']['currency'] }}</span
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+          <p class="conditions">
+            For your kind settlement And with our thanks.
+            <br />
+            Payment terms: payment upon receipt of invoice. No discount granted
+            for early payment. Payment by bank transfer or credit card.
+            <br />
+            In the event of late payment, fixed compensation for recovery costs:
+            40 {{ invoice['informations']['currency'] }}
+            <br />
+            (art. L.4413 and L.4416 commercial code).
+          </p>
+        </div>
+        <br />
       </div>
-      <br />
     </div>
-  </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-  <script type="text/javascript">
-
-    window.addEventListener('load', function () {
-      const element = document.getElementById("root"); // Replace 'yourHtmlContent' with the ID of the element containing your HTML content.
-      var opt = {
-        margin: 0.5,
-        filename: 'invoice.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 10 },
-        jsPDF: { unit: 'pt', format: 'a5', orientation: 'portrait' }
-      };
-      var worker = html2pdf().set(opt).from(element).save();
-
-    });
-  </script>
-</body>
-
+    <script type="text/javascript">
+      window.addEventListener("load", function () {
+        const element = document.getElementById("root"); // Replace 'yourHtmlContent' with the ID of the element containing your HTML content.
+        var opt = {
+          margin: 0.5,
+          filename: "invoice.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 10 },
+          jsPDF: { unit: "pt", format: "a5", orientation: "portrait" },
+        };
+        var worker = html2pdf().set(opt).from(element).save();
+      });
+    </script>
+  </body>
 </html>

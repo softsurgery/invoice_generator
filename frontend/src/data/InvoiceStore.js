@@ -271,6 +271,12 @@ class InvoiceStore {
       console.error("Error sending data to the server:", error);
     });
   }
+
+  generateRandomId() {
+    const timestamp = Number(new Date().getTime());
+    const randomPart = Math.floor(Math.random() * 10000);
+    this.setId(`${timestamp}-${randomPart}`);
+  }
 }
 
 const invoiceStore = new InvoiceStore();

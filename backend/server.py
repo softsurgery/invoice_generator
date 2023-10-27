@@ -3,8 +3,6 @@ from flask_cors import CORS, cross_origin
 import os
 import json
 import uuid
-from convertPDF import generate_pdf
-import asyncio
 
 def add_attribute(dictionary, name, value):
     dictionary[name] = value

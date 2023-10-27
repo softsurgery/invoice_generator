@@ -13,10 +13,11 @@ import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 import { mdiDownload } from '@mdi/js';
 import { mdiPrinter } from '@mdi/js';
+import { mdiKey } from '@mdi/js';
 
 const Invoice = observer(() => {
     let index = 0
-    
+
     const imageInputRef = useRef(null);
 
     const handleFileChange = (e) => {
@@ -89,14 +90,19 @@ const Invoice = observer(() => {
                         <h1 className="justify-content-end">INVOICE</h1>
                         <p className="justify-content-end"><strong>Invoice Reference :</strong></p>
                         <InputGroup className="mb-3 justify-content-end">
+
                             <InputGroup.Text>#</InputGroup.Text>
                             <Form.Control
                                 placeholder="Invoice ID"
                                 name="id"
-                                type="number"
-                                min={0}
+                                type="text"
                                 value={invoiceStore.getId()}
                                 onChange={(e) => { invoiceStore.setId(e.target.value) }} />
+                            <InputGroup.Text>
+                                <Button
+                                    variant="primary"
+                                    onClick={() => {invoiceStore.generateRandomId()}}
+                                ><Icon path={mdiKey} size={1} /> Generate ID</Button>{' '}</InputGroup.Text>
                         </InputGroup>
 
                         <Stack className="justify-content-end" direction="horizontal" gap={3}>
@@ -347,7 +353,7 @@ const Invoice = observer(() => {
                     }
                     }
                 ><Icon path={mdiDownload} size={1} /> Download Invoice</Button>{' '}
-                 <Button
+                <Button
                     variant="primary"
                     onClick={() => {
                         if (!invoiceStore.getLogo()) alert("image failed")
