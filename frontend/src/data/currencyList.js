@@ -21,7 +21,6 @@ export const currencies = [
   { code: "BMD", name: "Bermudian dollar", symbol: "$" },
   { code: "BTN", name: "Bhutanese ngultrum", symbol: "Nu." },
   { code: "BOB", name: "Bolivian boliviano", symbol: "Bs." },
-  { code: "USD", name: "United States dollar", symbol: "$" },
   {
     code: "BAM",
     name: "Bosnia and Herzegovina convertible mark",

@@ -52,7 +52,7 @@ const Invoice = observer(() => {
                             />
                         </Figure>
                         <br />
-                        <strong>Who is this invoice from? (required)</strong>
+                        <strong className='mt-2'>Who is this invoice from? (required)</strong>
                         <br />
                         <Form.Control
                             name="company"
@@ -98,11 +98,12 @@ const Invoice = observer(() => {
                                 type="text"
                                 value={invoiceStore.getId()}
                                 onChange={(e) => { invoiceStore.setId(e.target.value) }} />
-                            <InputGroup.Text>
+                            <InputGroup.Text style={{backgroundColor:"rgba(0,0,0,0)"}}>
                                 <Button
                                     variant="primary"
                                     onClick={() => {invoiceStore.generateRandomId()}}
-                                ><Icon path={mdiKey} size={1} /> Generate ID</Button>{' '}</InputGroup.Text>
+                                ><Icon path={mdiKey} size={1} /> Generate ID</Button>
+                            </InputGroup.Text>
                         </InputGroup>
 
                         <Stack className="justify-content-end" direction="horizontal" gap={3}>

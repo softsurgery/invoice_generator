@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 
-
 def change_image_src(html_file_path, image_id, new_src):
     try:
         with open(html_file_path, 'r', encoding='utf-8') as file:

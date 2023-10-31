@@ -18,7 +18,7 @@ class InvoiceStore {
   discount = 0;
   shipping = 0;
   amount_paid = 0;
-  currency = "$"
+  currency = "USD $";
 
   constructor() {
     makeAutoObservable(this, {
@@ -96,8 +96,7 @@ class InvoiceStore {
   }
 
   setCurrency(currency) {
-    console.log("set currency", this.currency)
-    this.currency = currency
+    this.currency = currency.toString();
   }
 
   getId() {

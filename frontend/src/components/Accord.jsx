@@ -7,8 +7,19 @@ import { mdiFormatFloatLeft } from "@mdi/js";
 import { mdiCash } from "@mdi/js";
 import invoiceStore from "../data/InvoiceStore";
 import { currencies } from "../data/currencyList";
+import { observer } from "mobx-react";
+import AutoComplete from "./Autocomplete";
+import { Typeahead } from 'react-bootstrap-typeahead';
 
-function Accord() {
+function filterBy(option, state) {
+  if (state.selected.length) {
+    return true;
+  }
+  return option.toLowerCase().indexOf(state.text.toLowerCase()) > -1
+  return true
+}
+
+const Accord = observer(() => {
   return (
     <Accordion >
       <Accordion.Item eventKey="0">
@@ -72,35 +83,33 @@ function Accord() {
       <Accordion.Item eventKey="2">
         <Accordion.Header>
           <Icon path={mdiCash} size={2} />
-          <h5 className="m-2">Currency</h5>
+          <h5 className="m-2">Invoice Settings</h5>
         </Accordion.Header>
         <Accordion.Body>
           <strong className="mt-2">
             Change Currency:
           </strong>
           <br />
-          <InputGroup className="mt-2">
-            <Form.Select
-              onChange={(e) => {
-                invoiceStore.setCurrency(e.target.value)
-              }} 
-              size='sm'
-              >
-              {currencies.map(curr => {
-                return (<option
-                  key={curr.name}
-                  value={curr.code + " " + curr.symbol}>
-                  {curr.code} {curr.symbol}
-                </option>)
-              })}
+          <Typeahead
+            className="mt-2"
+            filterBy={filterBy}
+            id="toggle_currency"
+            options={currencies.map(curr => curr.code + " " + curr.symbol)}
+            placeholder="Currency..."
+            onChange={(text, e) => { invoiceStore.setCurrency(text)}}
+            inputProps={{value : invoiceStore.getCurrency()}}
+            defaultInputValue={invoiceStore.getCurrency()}
+          >
 
-            </Form.Select>
-          </InputGroup>
-
+          </Typeahead>
+          <br />
+          <strong className="mt-2">
+            Auto-Save:
+          </strong>
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
   );
-}
+})
 
 export default Accord;
