@@ -63,3 +63,29 @@ h6 {
   width: 100%;
   padding: 10px;
 }
+
+#rswitch,#gswitch,#bswitch{
+  background-image: url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27><circle r=%273%27 fill=%27%23666%27/></svg>") !important;
+  background-color: rgb(255, 255, 255) !important;
+  font-size: 18px;
+  margin-left: -40px;
+  margin-right: 10px;
+}
+
+#rswitch:checked{
+  background-color: #dc3545 !important;
+  border-color: rgba(141, 141, 141, 0.533) !important;
+  background-image: url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27><circle r=%273%27 fill=%27%23fff%27/></svg>") !important;
+}
+
+#gswitch:checked{
+  background-color: #1b8856 !important;
+  border-color: rgba(141, 141, 141, 0.533) !important;
+  background-image: url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27><circle r=%273%27 fill=%27%23fff%27/></svg>") !important;
+}
+
+#bswitch:checked{
+  background-color: #1672fd !important;
+  border-color: rgba(141, 141, 141, 0.533) !important;
+  background-image: url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27><circle r=%273%27 fill=%27%23fff%27/></svg>") !important;
+}

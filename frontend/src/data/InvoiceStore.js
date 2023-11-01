@@ -35,6 +35,9 @@ class InvoiceStore {
       setDiscount: action,
       setShipping: action,
       setAmountPaid: action,
+      setLogo: action,
+      setCurrency: action,
+      setAmountPaid: action,
     });
     makePersistable(this, {name: 'InvoiceStore', properties: ['currency'], storage: window.localStorage});
   }
