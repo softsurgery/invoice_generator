@@ -55,7 +55,7 @@ def fill_tbody_with_data(html_file_path, tbody_id, data):
                         td = soup.new_tag('td')
                         if key == 'description':
                             td.string = item.get(key,'')
-                            td['style'] = 'width:65%'  # Add a style attribute to description <td>
+                            td['style'] = 'width:65%' 
                         elif key == 'quantity':
                             td.string = item.get(key, '')
                         elif key == 'rate':
@@ -64,7 +64,7 @@ def fill_tbody_with_data(html_file_path, tbody_id, data):
                         else:
                             rate = float(item.get('rate', 0))
                             quantity = float(item.get('quantity', 1))
-                            td.string = str(rate * quantity)  # Calculate rate * quantity
+                            td.string = str(rate * quantity)
                             td['class'] = 'text-right'
                         tr.append(td)
                     tbody.append(tr)

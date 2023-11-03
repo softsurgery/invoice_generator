@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-
 import Figure from 'react-bootstrap/Figure';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
@@ -8,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 import { observer } from "mobx-react";
-import invoiceStore from '../data/InvoiceStore';
+import invoiceStore from '../data/InvoiceInstanceStore';
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 import { mdiDownload } from '@mdi/js';
@@ -96,6 +95,7 @@ const Invoice = observer(() => {
                                 placeholder="Invoice ID"
                                 name="id"
                                 type="text"
+                                disabled
                                 value={invoiceStore.getId()}
                                 onChange={(e) => { invoiceStore.setId(e.target.value) }} />
                             <InputGroup.Text style={{backgroundColor:"rgba(0,0,0,0)"}}>
@@ -324,6 +324,7 @@ const Invoice = observer(() => {
                             <InputGroup className="w-50">
                                 <Form.Control
                                     type="number"
+                                    min={0}
                                     value={invoiceStore.getAmountPaid()}
                                     onChange={(e) => { invoiceStore.setAmountPaid(e.target.value) }}
                                 />

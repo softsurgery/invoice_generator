@@ -7,22 +7,18 @@ import { mdiBackburger, mdiImageArea } from "@mdi/js";
 import { mdiFormatFloatLeft } from "@mdi/js";
 import { mdiCash } from "@mdi/js";
 import { mdiCog } from '@mdi/js';
-import invoiceStore from "../data/InvoiceStore";
+import invoiceStore from "../data/InvoiceInstanceStore";
 import settings from "../data/settingsStore";
 import { currencies } from "../data/currencyList";
 import { observer } from "mobx-react";
 import { Typeahead } from 'react-bootstrap-typeahead';
 
 function filterBy(option, state) {
-  if (state.selected.length) {
-    return true;
-  }
   return option.toLowerCase().indexOf(state.text.toLowerCase()) > -1
-  return true
 }
 
-const toggleTextStyle = (color) => {
-  return { color: color, fontWeight: "bold", fontSize: "18px" }
+const toggleTextStyle = (color, active) => {
+  return { color: active ? color : "grey", fontWeight: "bold", fontSize: "18px" }
 }
 
 const Accord = observer(() => {
@@ -97,7 +93,7 @@ const Accord = observer(() => {
           </strong>
           <br />
           <Typeahead
-            className="mt-2"
+            className="mt-2 mb-3"
             filterBy={filterBy}
             id="toggle_currency"
             options={currencies.map(curr => curr.code + " " + curr.symbol)}
@@ -106,54 +102,39 @@ const Accord = observer(() => {
             inputProps={{ value: invoiceStore.getCurrency() }}
             defaultInputValue={invoiceStore.getCurrency()}
           >
-
           </Typeahead>
 
-          <Row className="mt-4">
-            <Col>
-              <strong className="mt-2">
-                Save Invoice:
-              </strong>
+          <Form.Check
+            style={toggleTextStyle("#1672fd", settings.getDev())}
+            className="mt-2"
+            id="bswitch"
+            type="switch"
+            label="Developer Mode"
+            checked={settings.getDev()}
+            onChange={() => settings.toggleDev()} />
+          {settings.getDev() ?
+            <div>
               <Form.Check
-                style={toggleTextStyle("#1b8856")}
+                style={toggleTextStyle("#1b8856", settings.getAutoSave())}
                 id="gswitch"
                 className="mt-2"
                 type="switch"
                 label="Auto-Save"
                 checked={settings.getAutoSave()}
                 onChange={() => settings.toggleAutoSave()} />
-            </Col>
-            <Col>
-              <strong className="mt-2">
-                Check for Errors:
-              </strong>
+
               <Form.Check
-                style={toggleTextStyle("#dc3545")}
+                style={toggleTextStyle("#dc3545", settings.getCheck())}
                 id="rswitch"
                 className="mt-2"
                 type="switch"
-                label="Check"
+                label="Form Control"
                 checked={settings.getCheck()}
                 onChange={() => settings.toggleCheck()} />
-            </Col>
-          </Row>
-          <Row className="mt-3">
-            <Col>
-              <strong className="mt-2">
-                Developper Mode:
-              </strong>
-              <Form.Check
-                style={toggleTextStyle("#1672fd")}
-                className="mt-2"
-                id="bswitch"
-                type="switch"
-                label="Activate"
-                checked={settings.getDev()}
-                onChange={() => settings.toggleDev()} />
-            </Col>
+                <br />
+              <strong className="p-2">ID : <span style={{ marginLeft: "10px",color:"#1672fd",fontSize:"12px" }}>{settings.getUserToken()}</span></strong>
 
-          </Row>
-          <br />
+            </div> : ""}
 
 
         </Accordion.Body>
