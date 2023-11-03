@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 import { observer } from "mobx-react";
-import invoiceStore from '../data/InvoiceInstanceStore';
+import invoiceInstanceStore from '../data/InvoiceInstanceStore';
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 import { mdiDownload } from '@mdi/js';
@@ -21,7 +21,7 @@ const Invoice = observer(() => {
 
     const handleFileChange = (e) => {
         console.log("from comp ", e.target.files[0])
-        invoiceStore.setLogo(e.target.files[0])
+        invoiceInstanceStore.setLogo(e.target.files[0])
     };
 
     return (
@@ -33,8 +33,8 @@ const Invoice = observer(() => {
                             <Figure.Image
                                 className='logo'
                                 alt="logo"
-                                src={typeof invoiceStore.logo === 'string' ? invoiceStore.logo
-                                    : invoiceStore.logo ? URL.createObjectURL(invoiceStore.logo)
+                                src={typeof invoiceInstanceStore.logo === 'string' ? invoiceInstanceStore.logo
+                                    : invoiceInstanceStore.logo ? URL.createObjectURL(invoiceInstanceStore.logo)
                                         : "/assets/picture.png"}
                                 onClick={(e) => { imageInputRef.current.click() }}
                             />
@@ -58,8 +58,8 @@ const Invoice = observer(() => {
                             type="text"
                             placeholder="Who is this invoice from?"
                             className="mt-2"
-                            value={invoiceStore.getCompany()}
-                            onChange={(e) => { invoiceStore.setCompany(e.target.value) }} />
+                            value={invoiceInstanceStore.getCompany()}
+                            onChange={(e) => { invoiceInstanceStore.setCompany(e.target.value) }} />
                         <Row className="mt-2" >
                             <Col xs={6}>
                                 <strong>Bill To</strong>
@@ -69,8 +69,8 @@ const Invoice = observer(() => {
                                     type="text"
                                     placeholder="Bill To"
                                     className="mt-2"
-                                    value={invoiceStore.getBills()}
-                                    onChange={(e) => { invoiceStore.setBills(e.target.value) }} />
+                                    value={invoiceInstanceStore.getBills()}
+                                    onChange={(e) => { invoiceInstanceStore.setBills(e.target.value) }} />
                             </Col>
                             <Col xs={6}>
                                 <strong>Ship To</strong>
@@ -80,8 +80,8 @@ const Invoice = observer(() => {
                                     type="text"
                                     placeholder="Ship To"
                                     className="mt-2"
-                                    value={invoiceStore.getShips()}
-                                    onChange={(e) => { invoiceStore.setShips(e.target.value) }} />
+                                    value={invoiceInstanceStore.getShips()}
+                                    onChange={(e) => { invoiceInstanceStore.setShips(e.target.value) }} />
                             </Col>
                         </Row>
                     </Col>
@@ -96,12 +96,12 @@ const Invoice = observer(() => {
                                 name="id"
                                 type="text"
                                 disabled
-                                value={invoiceStore.getId()}
-                                onChange={(e) => { invoiceStore.setId(e.target.value) }} />
+                                value={invoiceInstanceStore.getId()}
+                                onChange={(e) => { invoiceInstanceStore.setId(e.target.value) }} />
                             <InputGroup.Text style={{backgroundColor:"rgba(0,0,0,0)"}}>
                                 <Button
                                     variant="primary"
-                                    onClick={() => {invoiceStore.generateRandomId()}}
+                                    onClick={() => {invoiceInstanceStore.generateRandomId()}}
                                 ><Icon path={mdiKey} size={1} /> Generate ID</Button>
                             </InputGroup.Text>
                         </InputGroup>
@@ -113,8 +113,8 @@ const Invoice = observer(() => {
                                 name="date"
                                 type="date"
                                 placeholder="Date"
-                                value={invoiceStore.getDate()}
-                                onChange={(e) => { invoiceStore.setDate(e.target.value) }} />
+                                value={invoiceInstanceStore.getDate()}
+                                onChange={(e) => { invoiceInstanceStore.setDate(e.target.value) }} />
                         </Stack>
 
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
@@ -124,8 +124,8 @@ const Invoice = observer(() => {
                                 name="payement_terms"
                                 type="text"
                                 placeholder="Payment Terms"
-                                value={invoiceStore.getPaymentTerms()}
-                                onChange={(e) => { invoiceStore.setPaymentTerms(e.target.value) }} />
+                                value={invoiceInstanceStore.getPaymentTerms()}
+                                onChange={(e) => { invoiceInstanceStore.setPaymentTerms(e.target.value) }} />
                         </Stack>
 
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
@@ -135,8 +135,8 @@ const Invoice = observer(() => {
                                 name="due_date"
                                 type="date"
                                 placeholder="Who is this invoice from?"
-                                value={invoiceStore.getDueDate()}
-                                onChange={(e) => { invoiceStore.setDueDate(e.target.value) }} />
+                                value={invoiceInstanceStore.getDueDate()}
+                                onChange={(e) => { invoiceInstanceStore.setDueDate(e.target.value) }} />
                         </Stack>
 
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
@@ -146,8 +146,8 @@ const Invoice = observer(() => {
                                 name="po_number"
                                 type="text"
                                 placeholder="PO Number"
-                                value={invoiceStore.getPONumber()}
-                                onChange={(e) => { invoiceStore.setPONumber(e.target.value) }} />
+                                value={invoiceInstanceStore.getPONumber()}
+                                onChange={(e) => { invoiceInstanceStore.setPONumber(e.target.value) }} />
                         </Stack>
 
                     </Col>
@@ -169,8 +169,8 @@ const Invoice = observer(() => {
                     </thead>
                     <tbody>
                         {
-                            invoiceStore.getItems().map((item) => {
-                                const isFirstItem = item.id === invoiceStore.getItems()[0].id;
+                            invoiceInstanceStore.getItems().map((item) => {
+                                const isFirstItem = item.id === invoiceInstanceStore.getItems()[0].id;
                                 index++;
                                 return (
                                     <tr key={`item${item.id}`}>
@@ -180,7 +180,7 @@ const Invoice = observer(() => {
                                                 placeholder={"Description of Service or Product " + index}
                                                 value={item.description}
                                                 onChange={(e) => {
-                                                    invoiceStore.updateItem(item.id, "description", e.target.value);
+                                                    invoiceInstanceStore.updateItem(item.id, "description", e.target.value);
                                                 }}
                                             />
                                         </td>
@@ -191,7 +191,7 @@ const Invoice = observer(() => {
                                                 placeholder="1"
                                                 value={item.quantity}
                                                 onChange={(e) => {
-                                                    invoiceStore.updateItem(item.id, "quantity", e.target.value);
+                                                    invoiceInstanceStore.updateItem(item.id, "quantity", e.target.value);
                                                 }}
                                             />
                                         </td>
@@ -199,16 +199,16 @@ const Invoice = observer(() => {
                                             <Form.Control
                                                 type="number"
                                                 min={0}
-                                                placeholder={invoiceStore.getCurrency()}
+                                                placeholder={invoiceInstanceStore.getCurrency()}
                                                 value={item.rate}
                                                 onChange={(e) => {
-                                                    invoiceStore.updateItem(item.id, "rate", e.target.value);
+                                                    invoiceInstanceStore.updateItem(item.id, "rate", e.target.value);
                                                 }}
                                             />
                                         </td>
                                         <td style={{ width: "15%" }}>
                                             <h6 className="mt-2 mr-3">
-                                                {(item.rate * item.quantity).toFixed(2)} {invoiceStore.getCurrency()}
+                                                {(item.rate * item.quantity).toFixed(2)} {invoiceInstanceStore.getCurrency()}
                                             </h6>
                                         </td>
                                         {isFirstItem ? (
@@ -217,7 +217,7 @@ const Invoice = observer(() => {
                                                     style={{ width: "73px" }}
                                                     variant="danger"
                                                     onClick={() =>
-                                                        invoiceStore.clearFirstItem()
+                                                        invoiceInstanceStore.clearFirstItem()
                                                     }
                                                 >
                                                     Clear
@@ -227,7 +227,7 @@ const Invoice = observer(() => {
                                             <td style={{ width: "5%" }}>
                                                 <Button
                                                     variant="danger"
-                                                    onClick={() => invoiceStore.deleteItem(item.id)}
+                                                    onClick={() => invoiceInstanceStore.deleteItem(item.id)}
                                                 >
                                                     Delete
                                                 </Button>
@@ -243,7 +243,7 @@ const Invoice = observer(() => {
                     <Col sx={7}>
                         <Button
                             variant="success"
-                            onClick={() => invoiceStore.addItem()}
+                            onClick={() => invoiceInstanceStore.addItem()}
                         > <Icon path={mdiPlus} size={1} /> Add Item </Button>
 
                         <p className="conditions mt-5">
@@ -254,7 +254,7 @@ const Invoice = observer(() => {
                             No discount granted for early payment.
                             Payment by bank transfer or credit card.
                             <br /><br />
-                            In the event of late payment, fixed compensation for recovery costs: 40{invoiceStore.getCurrency()}
+                            In the event of late payment, fixed compensation for recovery costs: 40{invoiceInstanceStore.getCurrency()}
                             <br />
                             (art. L.4413 and L.4416 commercial code).
                         </p>
@@ -265,10 +265,10 @@ const Invoice = observer(() => {
                             <InputGroup className="w-50">
                                 <Form.Control
                                     type="number"
-                                    value={invoiceStore.getDiscount()}
+                                    value={invoiceInstanceStore.getDiscount()}
                                     min={0}
                                     max={100}
-                                    onChange={(e) => { invoiceStore.setDiscount(e.target.value) }} />
+                                    onChange={(e) => { invoiceInstanceStore.setDiscount(e.target.value) }} />
                                 <InputGroup.Text >%</InputGroup.Text>
                             </InputGroup>
                         </Stack>
@@ -279,8 +279,8 @@ const Invoice = observer(() => {
                                 <Form.Control
                                     type="number"
                                     min={0}
-                                    value={invoiceStore.getTax()}
-                                    onChange={(e) => { invoiceStore.setTax(e.target.value) }} />
+                                    value={invoiceInstanceStore.getTax()}
+                                    onChange={(e) => { invoiceInstanceStore.setTax(e.target.value) }} />
                                 <InputGroup.Text >%</InputGroup.Text>
                             </InputGroup>
                         </Stack>
@@ -291,9 +291,9 @@ const Invoice = observer(() => {
                                 <Form.Control
                                     type="number"
                                     min={0}
-                                    value={invoiceStore.getShipping()}
-                                    onChange={(e) => { invoiceStore.setShipping(e.target.value) }} />
-                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
+                                    value={invoiceInstanceStore.getShipping()}
+                                    onChange={(e) => { invoiceInstanceStore.setShipping(e.target.value) }} />
+                                <InputGroup.Text >{invoiceInstanceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
 
@@ -303,8 +303,8 @@ const Invoice = observer(() => {
                                 <Form.Control
                                     disabled
                                     type="number"
-                                    value={invoiceStore.sum().toFixed(2)} />
-                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
+                                    value={invoiceInstanceStore.sum().toFixed(2)} />
+                                <InputGroup.Text >{invoiceInstanceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
 
@@ -314,9 +314,9 @@ const Invoice = observer(() => {
                                 <Form.Control
                                     disabled
                                     type="number"
-                                    value={invoiceStore.getTTC().toFixed(2)}
+                                    value={invoiceInstanceStore.getTTC().toFixed(2)}
                                 />
-                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
+                                <InputGroup.Text >{invoiceInstanceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
@@ -325,10 +325,10 @@ const Invoice = observer(() => {
                                 <Form.Control
                                     type="number"
                                     min={0}
-                                    value={invoiceStore.getAmountPaid()}
-                                    onChange={(e) => { invoiceStore.setAmountPaid(e.target.value) }}
+                                    value={invoiceInstanceStore.getAmountPaid()}
+                                    onChange={(e) => { invoiceInstanceStore.setAmountPaid(e.target.value) }}
                                 />
-                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
+                                <InputGroup.Text >{invoiceInstanceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
                         <Stack className="justify-content-end mt-1" direction="horizontal" gap={3}>
@@ -337,9 +337,9 @@ const Invoice = observer(() => {
                                 <Form.Control
                                     disabled
                                     type="number"
-                                    value={invoiceStore.getBalanceDue().toFixed(2)}
+                                    value={invoiceInstanceStore.getBalanceDue().toFixed(2)}
                                 />
-                                <InputGroup.Text >{invoiceStore.getCurrency()}</InputGroup.Text>
+                                <InputGroup.Text >{invoiceInstanceStore.getCurrency()}</InputGroup.Text>
                             </InputGroup>
                         </Stack>
                     </Col>
@@ -350,16 +350,16 @@ const Invoice = observer(() => {
                 <Button
                     variant="success"
                     onClick={() => {
-                        if (!invoiceStore.getLogo()) alert("image failed")
-                        else invoiceStore.download()
+                        if (!invoiceInstanceStore.getLogo()) alert("image failed")
+                        else invoiceInstanceStore.download()
                     }
                     }
                 ><Icon path={mdiDownload} size={1} /> Download Invoice</Button>{' '}
                 <Button
                     variant="primary"
                     onClick={() => {
-                        if (!invoiceStore.getLogo()) alert("image failed")
-                        else invoiceStore.print()
+                        if (!invoiceInstanceStore.getLogo()) alert("image failed")
+                        else invoiceInstanceStore.print()
                     }
                     }
                 ><Icon path={mdiPrinter} size={1} /> Print Invoice</Button>{' '}

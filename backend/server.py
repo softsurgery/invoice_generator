@@ -102,7 +102,8 @@ def prepare_invoice(request):
             data["shipping"],
             data["amount_paid"],
             data["currency"],
-            items)
+            items,
+            data["balance_due"])
 
         return request_id
     return None
@@ -173,5 +174,6 @@ def get_invoices():
 
 
 # run *******************************************************************************************
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

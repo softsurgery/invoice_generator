@@ -23,6 +23,7 @@ class Invoice(Model):
     amount_paid = FloatField()
     currency = CharField()
     created_at = DateTimeField(default=datetime.datetime.now)
+    amount_due = FloatField()
 
     class Meta:
         database = db
@@ -38,12 +39,7 @@ class Item(Model):
         database = db
 
 
-if not os.path.exists("./database.db"):
-    db.connect()
-    db.create_tables([Invoice, Item])
-
-
-def create_invoice(id, user, company, logo, date, payment_terms, due_date, po_number, bills, ships, tax, discount, shipping, amount_paid, currency, items):
+def create_invoice(id, user, company, logo, date, payment_terms, due_date, po_number, bills, ships, tax, discount, shipping, amount_paid, currency, items, amount_due):
     invoice = Invoice.create(
         id=id,
         user=user,
@@ -60,6 +56,7 @@ def create_invoice(id, user, company, logo, date, payment_terms, due_date, po_nu
         shipping=shipping,
         amount_paid=amount_paid,
         currency=currency,
+        amount_due=amount_due,
     )
     for item in items:
         Item.create(description=item["description"], rate=item["rate"],
@@ -77,27 +74,19 @@ def get_invoices(user=None):
 
     return query
 
+
 def get_invoices_paginated(page, items_per_page, user=None):
     query = get_invoices(user)
     total_invoices = query.count()
-
-    # Calculate the total number of pages
     total_pages = (total_invoices + items_per_page - 1) // items_per_page
-
-    # Ensure the page is within a valid range
     if page < 1:
         page = 1
     elif page > total_pages:
         page = total_pages
-
-    # Calculate the start and end index for the current page
     start_index = (page - 1) * items_per_page
     end_index = min(start_index + items_per_page, total_invoices)
-
     invoices = query.offset(start_index).limit(items_per_page)
-
     invoices_data = []
-
     for invoice in invoices:
         invoice_dict = {
             "id": invoice.id,
@@ -116,17 +105,15 @@ def get_invoices_paginated(page, items_per_page, user=None):
             "amount_paid": invoice.amount_paid,
             "currency": invoice.currency,
             "created_at": invoice.created_at,
+            "amount_due": invoice.amount_due,
         }
         invoices_data.append(invoice_dict)
-
     return {
         "invoices_data": invoices_data,
         "total_invoices": total_invoices,
         "total_pages": total_pages,
         "current_page": page,
     }
-
-
 
 
 def get_invoice_by_id(id):
@@ -154,3 +141,8 @@ def get_invoice_by_id(id):
 def delete_invoice(id):
     invoice = get_invoice_by_id(id)
     invoice.delete_instance()
+
+
+if not os.path.exists("./database.db"):
+    db.connect()
+    db.create_tables([Invoice, Item])

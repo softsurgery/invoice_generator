@@ -1,9 +1,10 @@
-import { makeAutoObservable, action, computed } from "mobx";
-import axios from "axios";
+import { makeAutoObservable, action } from "mobx";
 import { makePersistable } from "mobx-persist-store";
+import axios from "axios";
 import settings from "./settingsStore";
+import { flask_url } from "./urls";
 
-class InvoiceStore {
+class InvoiceInstanceStore {
   auto = -1;
   id = "";
   company = "";
@@ -40,9 +41,14 @@ class InvoiceStore {
       setCurrency: action,
       setAmountPaid: action,
     });
-    makePersistable(this, {name: 'InvoiceStore', properties: ['currency'], storage: window.localStorage});
+    makePersistable(this, {
+      name: "InvoiceInstanceStore",
+      properties: ["currency"],
+      storage: window.localStorage,
+    });
   }
 
+  /* Setters************************************************************************************************************** */
   setId(id) {
     this.id = id;
   }
@@ -103,6 +109,7 @@ class InvoiceStore {
     this.currency = currency.toString();
   }
 
+  /* Getters************************************************************************************************************** */
   getId() {
     return this.id;
   }
@@ -159,10 +166,11 @@ class InvoiceStore {
     return this.logo;
   }
 
-  getCurrency(){
+  getCurrency() {
     return this.currency;
   }
 
+  /* ************************************************************************************************************** */
   createItem(index = 0) {
     this.auto++;
     return {
@@ -212,7 +220,7 @@ class InvoiceStore {
     return this.getTTC() - this.amount_paid;
   }
 
-  collectData(){
+  collectData() {
     return {
       id: this.getId(),
       user_token: settings.getUserToken(),
@@ -231,49 +239,51 @@ class InvoiceStore {
       logo: this.getLogo(),
       total_ht: this.sum().toFixed(2),
       total_ttc: this.getTTC().toFixed(2),
-      balance_due:this.getBalanceDue().toFixed(2),
-      currency: this.getCurrency()
+      balance_due: this.getBalanceDue().toFixed(2),
+      currency: this.getCurrency(),
     };
   }
 
   print() {
-    axios.post("http://127.0.0.1:5001/print", this.collectData(), {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => {
-      console.log("Server response:", response.data);
-      
-      const redirectURL = response.data.redirectURL;
-      
-      if (redirectURL) {
-        window.open(redirectURL, "_blank");
-      }
-    })
-    .catch((error) => {
-      console.error("Error sending data to the server:", error);
-    });
+    axios
+      .post(`${flask_url}/print`, this.collectData(), {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("Server response:", response.data);
+
+        const redirectURL = response.data.redirectURL;
+
+        if (redirectURL) {
+          window.open(redirectURL, "_blank");
+        }
+      })
+      .catch((error) => {
+        console.error("Error sending data to the server:", error);
+      });
   }
 
-  download(){
-    axios.post("http://127.0.0.1:5001/download", this.collectData(), {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => {
-      console.log("Server response:", response.data);
-      
-      const redirectURL = response.data.redirectURL;
-      
-      if (redirectURL) {
-        window.open(redirectURL, "_blank");
-      }
-    })
-    .catch((error) => {
-      console.error("Error sending data to the server:", error);
-    });
+  download() {
+    axios
+      .post(`${flask_url}/download`, this.collectData(), {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("Server response:", response.data);
+
+        const redirectURL = response.data.redirectURL;
+
+        if (redirectURL) {
+          window.open(redirectURL, "_blank");
+        }
+      })
+      .catch((error) => {
+        console.error("Error sending data to the server:", error);
+      });
   }
 
   generateRandomId() {
@@ -283,5 +293,5 @@ class InvoiceStore {
   }
 }
 
-const invoiceStore = new InvoiceStore();
-export default invoiceStore;
+const invoiceInstanceStore = new InvoiceInstanceStore();
+export default invoiceInstanceStore;

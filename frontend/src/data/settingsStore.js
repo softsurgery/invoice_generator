@@ -1,11 +1,12 @@
 import { makeAutoObservable, action, computed } from "mobx";
 import { makePersistable } from "mobx-persist-store";
 import axios from "axios";
+import { flask_url } from "./urls";
 
 class Settings {
   user_token = "";
-  auto_save = false;
-  check = false;
+  auto_save = true;
+  check = true;
   dev = false;
 
   constructor() {
@@ -24,7 +25,7 @@ class Settings {
 
   async initializeUser() {
       try {
-        const response = await axios.get("http://127.0.0.1:5001/get_token");
+        const response = await axios.get(`${flask_url}/get_token`);
         const data = response.data;
         this.setUserToken(data.token);
       } catch (error) {
@@ -34,7 +35,6 @@ class Settings {
 
   setUserToken(token) {
     this.user_token = token;
-    console.log(this.user);
   }
 
   toggleAutoSave() {
@@ -47,8 +47,8 @@ class Settings {
 
   toggleDev() {
     this.dev = !this.dev;
-    this.check = false;
-    this.auto_save = false;
+    this.check = true;
+    this.auto_save = true;
   }
 
   getAutoSave() {

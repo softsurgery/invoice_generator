@@ -1,13 +1,10 @@
 import Accordion from "react-bootstrap/Accordion";
 import Icon from "@mdi/react";
 import Form from 'react-bootstrap/Form';
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
-import { mdiBackburger, mdiImageArea } from "@mdi/js";
+import { mdiImageArea } from "@mdi/js";
 import { mdiFormatFloatLeft } from "@mdi/js";
-import { mdiCash } from "@mdi/js";
 import { mdiCog } from '@mdi/js';
-import invoiceStore from "../data/InvoiceInstanceStore";
+import invoiceInstanceStore from "../data/InvoiceInstanceStore";
 import settings from "../data/settingsStore";
 import { currencies } from "../data/currencyList";
 import { observer } from "mobx-react";
@@ -98,9 +95,9 @@ const Accord = observer(() => {
             id="toggle_currency"
             options={currencies.map(curr => curr.code + " " + curr.symbol)}
             placeholder="Currency..."
-            onChange={(text, e) => { invoiceStore.setCurrency(text) }}
-            inputProps={{ value: invoiceStore.getCurrency() }}
-            defaultInputValue={invoiceStore.getCurrency()}
+            onChange={(text, e) => { invoiceInstanceStore.setCurrency(text) }}
+            inputProps={{ value: invoiceInstanceStore.getCurrency() }}
+            defaultInputValue={invoiceInstanceStore.getCurrency()}
           >
           </Typeahead>
 
@@ -132,8 +129,6 @@ const Accord = observer(() => {
                 checked={settings.getCheck()}
                 onChange={() => settings.toggleCheck()} />
                 <br />
-              <strong className="p-2">ID : <span style={{ marginLeft: "10px",color:"#1672fd",fontSize:"12px" }}>{settings.getUserToken()}</span></strong>
-
             </div> : ""}
 
 

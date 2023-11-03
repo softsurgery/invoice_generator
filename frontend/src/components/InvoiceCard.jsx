@@ -9,42 +9,37 @@ import { mdiReload } from '@mdi/js';
 
 function InvoiceCard(props) {
     return (
-
         <Card className="mt-4" style={{ width: '90%' }}>
             <Card.Header>{props.id}</Card.Header>
             <Card.Body>
-                <Card.Title>Invoice : {props.id}</Card.Title>
-                <Card.Text className='mt-4'>
+                <Card.Title><span>Invoice : {props.id}</span></Card.Title>
+                <div className='p-3'>
                     <Row>
-
                         <Col>
-                            <strong>Bills To: </strong>{props.bills_to}
+                            <strong>Bills To: </strong>{props.bills}
                             <br />
-                            <strong>Date: </strong>{props.bills_to}
+                            <strong>Date: </strong>{props.date}
                             <br />
-                            <strong>PO Number: </strong>{props.bills_to}
+                            <strong>PO Number: </strong>{props.po_number}
                         </Col>
                         <Col>
-                            <strong>Due Date: </strong>{props.bills_to}
+                            <strong>Due Date: </strong>{props.due_date}
                             <br />
-                            <strong>Payement Terms: </strong>{props.bills_to}
+                            <strong>Payment Terms: </strong>{props.payment_terms}
                             <br />
-                            <strong>Amount Paid: </strong>{props.bills_to}
+                            <strong>Amount Paid: </strong>{props.amount_paid} {props.currency}
                             <br />
                         </Col>
                         <Col>
-
-                            <strong>Discount: </strong>{props.bills_to}
+                            <strong>Discount: </strong>{props.discount} %
                             <br />
-                            <strong>Tax: </strong>{props.bills_to}
+                            <strong>Tax: </strong>{props.tax} %
                             <br />
-                            <strong>Balance Due: </strong>{props.bills_to}
+                            <strong>Balance Due: </strong>{props.balance_due} {props.currency}
                             <br />
                         </Col>
-
                     </Row>
-
-                </Card.Text>
+                </div>
                 <Button
                     variant="warning"
                     className='m-2'
@@ -57,7 +52,6 @@ function InvoiceCard(props) {
                     variant="primary"
                     className='m-2'
                 ><Icon path={mdiPrinter} size={1} /> Print Invoice</Button>{' '}
-
             </Card.Body>
         </Card>
     );
