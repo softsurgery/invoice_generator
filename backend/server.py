@@ -5,11 +5,11 @@ from models import create_invoice, get_invoices_paginated
 import os
 import json
 import uuid
+from navigate import navigate
 
 # path configurations *******************************************************************************************
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(script_dir)
+navigate()
 UPLOAD_FOLDER = 'static'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)

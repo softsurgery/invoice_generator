@@ -7,28 +7,37 @@ import { flask_url } from "./urls";
 class InvoiceStore {
   invoices = [];
   currentPage = 1;
+  total_invoices = 0;
   totalPages = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 2;
+  finished = false;
 
   constructor() {
-    makeAutoObservable(this, {
-      loadInvoices: action,
-      setInvoices: action,
-      setCurrentPage: action,
+    makeAutoObservable(this,{
+        loadInvoices:action,
+        setInvoices:action,
+        setCurrentPage:action,
+        setFinished:action,
     });
   }
 
-  async loadInvoices(page, itemsPerPage) {
+  async loadInvoices() {
     try {
       const response = await axios.post(`${flask_url}/invoice`, {
-        page: page,
-        invoice_per_page: itemsPerPage,
+        page: this.currentPage,
+        invoice_per_page: this.itemsPerPage,
         user_token: settings.getUserToken(),
       });
 
       if (response.data && response.data.invoices_data) {
-        this.extendInvoices(response.data.invoices_data);
-        this.currentPage = page;
+        const newInvoices = response.data.invoices_data;
+        if (this.invoices.length < this.total_invoices){
+            this.setInvoices(this.invoices.concat(newInvoices))
+            this.setCurrentPage(this.currentPage+1)
+        } else{
+            this.setFinished(true)
+        }
+        this.total_invoices = response.data.total_invoices;
         this.totalPages = response.data.total_pages;
       }
     } catch (error) {
@@ -36,16 +45,20 @@ class InvoiceStore {
     }
   }
 
-  setInvoices(invoices) { 
+  setInvoices(invoices) {
     this.invoices = invoices;
-  }
-
-  extendInvoices(invoices) {
-    this.invoices = this.invoices.concat(invoices);
   }
 
   setCurrentPage(page) {
     this.currentPage = page;
+  }
+
+  setFinished(finished) {
+    this.finished = finished;
+  }
+
+  getFinished() {
+    return this.finished;
   }
 }
 

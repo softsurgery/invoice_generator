@@ -5,13 +5,10 @@ import InvoiceCard from "./InvoiceCard";
 import React, { useEffect, useState } from "react";
 
 const History = observer(() => {
-    const [page,setPage] = useState(1);
 
-    const handleLoad = () => {
-        invoiceStore.loadInvoices(page+1,2);
-        setPage(page+1);
-        console.log(page)
-    }
+    useEffect(() => {
+        invoiceStore.loadInvoices();
+    }, [])
 
     return (
         <Container fluid>
@@ -36,13 +33,14 @@ const History = observer(() => {
                     />
                 ))}
             </div>
-            <div className="text-center">
-                <h3 className="">  
-                <a href="#bottom"
-                onClick={handleLoad}
-                >Load More...</a></h3>
-            </div>
-            <span id="bottom"></span>
+            {!invoiceStore.getFinished() ? (<div>
+                <div className="text-center">
+                    <h3 className="">
+                        <a href="#bottom"
+                            onClick={() => invoiceStore.loadInvoices()}
+                        >Load More...</a></h3>
+                </div>
+                <span id="bottom"></span></div>) : "There is nothing to show"}
         </Container>
     );
 });

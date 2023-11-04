@@ -1,10 +1,11 @@
 from peewee import Model, CharField, FloatField, IntegerField, ForeignKeyField, SqliteDatabase, DateTimeField, DateField
 import datetime
 import os
+from navigate import navigate
 
+navigate()
 
 db = SqliteDatabase('./database.db')
-
 
 class Invoice(Model):
     id = CharField(primary_key=True)
@@ -115,10 +116,8 @@ def get_invoices_paginated(page, items_per_page, user=None):
         "current_page": page,
     }
 
-
 def get_invoice_by_id(id):
     return Invoice.get(Invoice.id == id)
-
 
 # def update_invoice(id,user, company, logo, date, payment_terms, due_date, po_number, bills, ships, tax, discount, shipping, amount_paid, currency):
 #     invoice = get_invoice_by_id(id)

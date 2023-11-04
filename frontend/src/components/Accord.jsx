@@ -130,8 +130,6 @@ const Accord = observer(() => {
                 onChange={() => settings.toggleCheck()} />
                 <br />
             </div> : ""}
-
-
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
