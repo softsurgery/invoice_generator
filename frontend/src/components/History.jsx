@@ -33,14 +33,14 @@ const History = observer(() => {
                     />
                 ))}
             </div>
-            {!invoiceStore.getFinished() ? (<div>
-                <div className="text-center">
-                    <h3 className="">
-                        <a href="#bottom"
-                            onClick={() => invoiceStore.loadInvoices()}
-                        >Load More...</a></h3>
-                </div>
-                <span id="bottom"></span></div>) : "There is nothing to show"}
+            <div className="text-center">
+                {!invoiceStore.getFinished() ? (
+                    <h4 className="">
+                        <a href="#" onClick={() => invoiceStore.loadInvoices()}>Load More...</a>
+                    </h4>
+                ) : <h4 className="">
+                    <a>There is nothing to show</a>
+                </h4>}</div>
         </Container>
     );
 });
