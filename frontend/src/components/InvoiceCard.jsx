@@ -5,7 +5,6 @@ import Row from 'react-bootstrap/esm/Row';
 import Icon from '@mdi/react';
 import { mdiDownload } from '@mdi/js';
 import { mdiPrinter } from '@mdi/js';
-import { mdiReload } from '@mdi/js';
 
 function InvoiceCard(props) {
     return (
@@ -40,10 +39,6 @@ function InvoiceCard(props) {
                         </Col>
                     </Row>
                 </div>
-                <Button
-                    variant="warning"
-                    className='m-2'
-                ><Icon path={mdiReload} size={1} /> Reuse Invoice</Button>{' '}
                 <Button
                     variant="success"
                     className='m-2'
