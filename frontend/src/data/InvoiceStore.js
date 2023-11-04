@@ -2,7 +2,7 @@ import { makeAutoObservable, action } from "mobx";
 import { makePersistable } from "mobx-persist-store";
 import axios from "axios";
 import settings from "./settingsStore";
-import { flask_url } from "./urls";
+import { flask_url } from "../json/urls";
 
 class InvoiceStore {
   invoices = [];
@@ -34,6 +34,7 @@ class InvoiceStore {
         if (this.invoices.length < this.total_invoices){
             this.setInvoices(this.invoices.concat(newInvoices))
             this.setCurrentPage(this.currentPage+1)
+            this.setFinished(false)
         } else{
             this.setFinished(true)
         }

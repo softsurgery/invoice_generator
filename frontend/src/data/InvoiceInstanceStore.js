@@ -2,7 +2,7 @@ import { makeAutoObservable, action } from "mobx";
 import { makePersistable } from "mobx-persist-store";
 import axios from "axios";
 import settings from "./settingsStore";
-import { flask_url } from "./urls";
+import { flask_url } from "../json/urls";
 
 class InvoiceInstanceStore {
   auto = -1;

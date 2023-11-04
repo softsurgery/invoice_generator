@@ -1,7 +1,7 @@
 import { makeAutoObservable, action, computed } from "mobx";
 import { makePersistable } from "mobx-persist-store";
 import axios from "axios";
-import { flask_url } from "./urls";
+import { flask_url } from "../json/urls";
 
 class Settings {
   user_token = "";

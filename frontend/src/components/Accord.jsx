@@ -6,7 +6,7 @@ import { mdiFormatFloatLeft } from "@mdi/js";
 import { mdiCog } from '@mdi/js';
 import invoiceInstanceStore from "../data/InvoiceInstanceStore";
 import settings from "../data/settingsStore";
-import { currencies } from "../data/currencyList";
+import { currencies } from "../json/currencies";
 import { observer } from "mobx-react";
 import { Typeahead } from 'react-bootstrap-typeahead';
 
