@@ -18,6 +18,7 @@ const History = observer(() => {
                 {invoiceStore.invoices.map(invoice => (
                     <InvoiceCard
                         key={invoice.id}
+                        created_at={invoice.created_at}
                         id={invoice.id}
                         bills={invoice.bills}
                         date={invoice.date}

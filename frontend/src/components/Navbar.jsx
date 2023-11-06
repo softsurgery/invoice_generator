@@ -12,7 +12,9 @@ function NavbarComponent() {
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
                 <Navbar.Brand
-                    onClick={() => navigate("/")}>
+                    onClick={() => navigate("/")}
+                    style={{ color: "#113f67" }}>
+                    <img src="/assets/logo.png" alt="Invoice" width={70} />
                     Invoice Generator
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />

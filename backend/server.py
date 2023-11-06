@@ -34,7 +34,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 queue = []
 
-
 def prepare_invoice(request):
     data = request.form.to_dict()
     logo_file = request.files.get('logo')
@@ -173,7 +172,6 @@ def get_invoices():
         return jsonify({'error': "No invoices found in the specified range."})
 
 
-# run *******************************************************************************************
-
+#*******************************************************************************************
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

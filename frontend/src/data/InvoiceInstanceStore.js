@@ -3,6 +3,7 @@ import { makePersistable } from "mobx-persist-store";
 import axios from "axios";
 import settings from "./settingsStore";
 import { flask_url } from "../json/urls";
+import { formatDate } from "./additional";
 
 class InvoiceInstanceStore {
   auto = -1;
@@ -225,9 +226,9 @@ class InvoiceInstanceStore {
       id: this.getId(),
       user_token: settings.getUserToken(),
       company: this.getCompany(),
-      date: this.getDate(),
+      date: formatDate(new Date(this.getDate())),
+      due_date: formatDate(new Date(this.getDueDate())),
       payment_terms: this.getPaymentTerms(),
-      due_date: this.getDueDate(),
       po_number: this.getPONumber(),
       bills: this.getBills(),
       ships: this.getShips(),

@@ -93,7 +93,7 @@ const Accord = observer(() => {
             className="mt-2 mb-3"
             filterBy={filterBy}
             id="toggle_currency"
-            options={currencies.map(curr => curr.code + " " + curr.symbol)}
+            options={currencies.map(curr => curr.code + " " + curr.symbol )}
             placeholder="Currency..."
             onChange={(text, e) => { invoiceInstanceStore.setCurrency(text) }}
             inputProps={{ value: invoiceInstanceStore.getCurrency() }}

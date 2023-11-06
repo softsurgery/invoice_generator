@@ -25,7 +25,7 @@ const Invoice = observer(() => {
     };
 
     return (
-        <div style={{ width: "100%" }}>
+        <div>
             <div className="invoice">
                 <Row>
                     <Col sx={7}>

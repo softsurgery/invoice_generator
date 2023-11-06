@@ -9,7 +9,7 @@ import { mdiPrinter } from '@mdi/js';
 function InvoiceCard(props) {
     return (
         <Card className="mt-4" style={{ width: '90%' }}>
-            <Card.Header>{props.id}</Card.Header>
+            <Card.Header>{props.created_at}</Card.Header>
             <Card.Body>
                 <Card.Title><span>Invoice : {props.id}</span></Card.Title>
                 <div className='p-3'>

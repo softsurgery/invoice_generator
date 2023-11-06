@@ -14,7 +14,7 @@ class Invoice(Model):
     logo = CharField(null=True)
     date = DateField()
     payment_terms = CharField()
-    due_date = CharField()
+    due_date = DateField()
     po_number = CharField()
     bills = CharField()
     ships = CharField()
@@ -142,6 +142,5 @@ def delete_invoice(id):
     invoice.delete_instance()
 
 
-if not os.path.exists("./database.db"):
-    db.connect()
-    db.create_tables([Invoice, Item])
+db.connect()
+db.create_tables([Invoice, Item])
