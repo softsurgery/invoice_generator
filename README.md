@@ -1,6 +1,6 @@
 # Invoice Software
 
-**Invoice Software** is a [brief description of your software, e.g., web application, desktop application, or mobile app] designed to simplify the process of creating, managing, and tracking invoices for your business.
+**Invoice Software** is a homemade invoice generator designed to simplify the process of creating and tracking invoices for your business.
 
 ## Table of Contents
 
@@ -16,8 +16,7 @@
 ## Features
 
 - **Create Invoices:** Easily generate professional invoices with essential details.
-- **Manage Invoices:** Organize and keep track of all your invoices in one place.
-- **Send Invoices:** Send invoices to clients via email or export as PDF.
+- **Print & Download Invoices:** Download invoices or export as PDF.
 - **Invoice Templates:** Choose from a variety of customizable invoice templates.
 - **Invoice History:** Access a history of all your previous invoices.
 
@@ -34,13 +33,13 @@ Provide clear, step-by-step instructions on how to install and set up your softw
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/invoice-software.git
+   git clone https://github.com/softsurgery/invoice_generator
    ```
 
 2. Install dependencies:
 
    ```bash
-   npm install
+   yarn install
    ```
 
 3. Configuration:
@@ -51,7 +50,7 @@ Provide clear, step-by-step instructions on how to install and set up your softw
 4. Start the application:
 
    ```bash
-   npm start
+    yarn dev
    ```
 
 ## Usage
@@ -60,7 +59,6 @@ Explain how to use your software. Provide examples, code snippets, or screenshot
 
 ## Screenshots
 
-Include screenshots or links to images that showcase your software's user interface or key features.
 
 ## Contributing
 
