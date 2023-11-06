@@ -8,6 +8,7 @@ class Settings {
   auto_save = true;
   check = true;
   dev = false;
+  flip = false;
 
   constructor() {
     makeAutoObservable(this, {
@@ -15,10 +16,11 @@ class Settings {
       toggleAutoSave: action,
       toggleCheck: action,
       toggleDev: action,
+      toggleFlip: action,
     });
     makePersistable(this, {
       name: "settings",
-      properties: ["user_token","auto_save", "check", "dev"],
+      properties: ["user_token","auto_save", "check", "dev","flip"],
       storage: window.localStorage,
     });
   }
@@ -45,6 +47,10 @@ class Settings {
     this.check = !this.check;
   }
 
+  toggleFlip(){
+    this.flip = !this.flip;
+  }
+
   toggleDev() {
     this.dev = !this.dev;
     this.check = true;
@@ -65,6 +71,10 @@ class Settings {
 
   getUserToken() {
     return this.user_token;
+  }
+
+  getFlip(){
+    return this.flip;
   }
 }
 

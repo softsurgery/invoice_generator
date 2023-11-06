@@ -15,12 +15,17 @@ function filterBy(option, state) {
 }
 
 const toggleTextStyle = (color, active) => {
-  return { color: active ? color : "grey", fontWeight: "bold", fontSize: "18px" }
+  return { 
+    color: active ? 
+    color : "grey", 
+    fontWeight: "bold", 
+    fontSize: "18px" 
+  }
 }
 
 const Accord = observer(() => {
   return (
-    <Accordion >
+    <Accordion className="accord">
       <Accordion.Item eventKey="0">
         <Accordion.Header>
           <Icon path={mdiFormatFloatLeft} size={2} />
@@ -93,7 +98,7 @@ const Accord = observer(() => {
             className="mt-2 mb-3"
             filterBy={filterBy}
             id="toggle_currency"
-            options={currencies.map(curr => curr.code + " " + curr.symbol )}
+            options={currencies.map(curr => curr.code + " " + curr.symbol)}
             placeholder="Currency..."
             onChange={(text, e) => { invoiceInstanceStore.setCurrency(text) }}
             inputProps={{ value: invoiceInstanceStore.getCurrency() }}
@@ -109,6 +114,7 @@ const Accord = observer(() => {
             label="Developer Mode"
             checked={settings.getDev()}
             onChange={() => settings.toggleDev()} />
+
           {settings.getDev() ?
             <div>
               <Form.Check
@@ -128,7 +134,16 @@ const Accord = observer(() => {
                 label="Form Control"
                 checked={settings.getCheck()}
                 onChange={() => settings.toggleCheck()} />
-                <br />
+
+              <Form.Check
+                style={toggleTextStyle("purple", settings.getFlip())}
+                className="mt-2"
+                id="pswitch"
+                type="switch"
+                label="Flip"
+                checked={settings.getFlip()}
+                onChange={() => settings.toggleFlip()} />
+
             </div> : ""}
         </Accordion.Body>
       </Accordion.Item>
