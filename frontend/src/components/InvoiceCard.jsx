@@ -39,14 +39,14 @@ function InvoiceCard(props) {
                         </Col>
                     </Row>
                 </div>
-                <Button
+                {/* <Button
                     variant="success"
                     className='m-2'
                 ><Icon path={mdiDownload} size={1} /> Download Invoice</Button>{' '}
                 <Button
                     variant="primary"
                     className='m-2'
-                ><Icon path={mdiPrinter} size={1} /> Print Invoice</Button>{' '}
+                ><Icon path={mdiPrinter} size={1} /> Print Invoice</Button>{' '} */}
             </Card.Body>
         </Card>
     );

@@ -26,7 +26,6 @@ function NavbarComponent() {
                     >
                         <Nav.Link onClick={() => navigate("/")}>New Invoice <Badge bg="success">Here</Badge></Nav.Link>
                         <Nav.Link onClick={() => navigate("/history")}>History</Nav.Link>
-                        <Nav.Link onClick={() => navigate("/api")}>API</Nav.Link>
                     </Nav>
                     <Form className="d-flex">
                         <Form.Control

@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Invoice from './components/Invoice';
 import History from './components/History';
 import Footer from './components/Footer';
+import E404 from './components/E404';
 
 function App() {
   return (
@@ -18,8 +19,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Invoice />} />
               <Route path="history" element={<History />} />
-              <Route path="api" element={<h1>API</h1>} />
-              <Route path="*" element={<h1>Not Found</h1>} />
+              <Route path="*" element={<E404/>} />
             </Routes>
           </Col>
           <Col xs={3}>
