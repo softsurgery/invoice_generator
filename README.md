@@ -16,7 +16,7 @@
 ## Features
 
 - **Create Invoices:** Easily generate professional invoices with essential details.
-- **Print & Download Invoices:** Download invoices or export as PDF.
+- **Print & Download Invoices:** Print invoices or export as PDF.
 - **Invoice Templates:** Choose from a variety of customizable invoice templates.
 - **Invoice History:** Access a history of all your previous invoices.
 
@@ -55,15 +55,11 @@ Provide clear, step-by-step instructions on how to install and set up your softw
 
 ## Usage
 
-Explain how to use your software. Provide examples, code snippets, or screenshots to help users understand how to create and manage invoices effectively.
 
 ## Screenshots
 
 
 ## Contributing
 
-Explain how others can contribute to your project. Provide guidelines for submitting bug reports, feature requests, or pull requests. If you have a code of conduct or specific contribution requirements, make them clear here.
 
 ## License
-
-Specify the license under which your software is distributed. For example, you might use an open-source license like MIT or GPL.
